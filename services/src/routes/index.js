@@ -12,7 +12,7 @@ router.post(routes.paths.signout, auth.userSignout);
 
 /* profile */
 router.get(routes.paths.profiledetails, authToken, profile.getProfile);
-router.patch(routes.paths.updatepassword, authToken, profile.updateAdminPassword);
+router.patch(routes.paths.updatepassword, authToken, profile.updatePassword);
 
 /* taxes */
 router.post(routes.paths.newTax, authToken, taxs.createTax);
