@@ -8,7 +8,7 @@ const { core } = require('../utils');
 /*
  * @ API - User Register
  * @ method - POST
- * @ end point - http://localhost:4001/api/v1/auth/signup
+ * @ end point - http://localhost:4000/api/auth/signup
  */
 const userSignup = async (req, res) => {
   try {
@@ -53,7 +53,7 @@ const userSignup = async (req, res) => {
 /*
  * @ API - User Login
  * @ method - POST
- * @ end point - http://localhost:4001/api/v1/auth/signin
+ * @ end point - http://localhost:4000/api/auth/signin
  */
 const userSignin = async (req, res) => {
   try {
@@ -100,7 +100,7 @@ const userSignin = async (req, res) => {
 /*
  * @ API - User Logout
  * @ method - POST
- * @ end point - http://localhost:4001/api/v1/auth/sign-out
+ * @ end point - http://localhost:4000/api/auth/sign-out
  */
 const userSignout = async (req, res) => {
   try {

@@ -1,5 +1,5 @@
 const { userSignup, userSignin, userSignout } = require('./auth.controller');
-const { getProfile, updateAdminPassword } = require('./profile.controller');
+const { getProfile, updatePassword } = require('./profile.controller');
 const { createTax, listOfTaxes } = require('./tax.controller');
 
 module.exports = {
@@ -10,7 +10,7 @@ module.exports = {
   },
   profile: {
     getProfile,
-    updateAdminPassword,
+    updatePassword,
   },
   taxs: {
     createTax,
