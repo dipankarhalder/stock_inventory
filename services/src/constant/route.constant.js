@@ -15,6 +15,11 @@ const paths = {
   newTax: '/tax/new',
   listTaxs: '/tax/list',
   taxItem: '/tax/:id',
+
+  /* status */
+  newStatus: '/status/new',
+  listStatus: '/status/list',
+  statusItem: '/status/:id',
 };
 
 module.exports = {

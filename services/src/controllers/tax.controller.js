@@ -4,9 +4,13 @@ const Tax = require('../models/tax.model');
 const User = require('../models/user.model');
 const { msg } = require('../constant');
 const { taxs } = require('../validation');
-const { comutils } = require('../utils');
+const { core } = require('../utils');
 
-/* create category */
+/*
+ * @ API - Create Tax
+ * @ method - POST
+ * @ end point - http://localhost:4000/api/tax/new
+ */
 const createTax = async (req, res) => {
   try {
     const decoded = req.user;
@@ -16,13 +20,13 @@ const createTax = async (req, res) => {
       abortEarly: false,
     });
     if (error) {
-      return comutils.validateFields(res, error.details.map((detail) => detail.message).join(', '));
+      return core.validateFields(res, error.details.map((detail) => detail.message).join(', '));
     }
 
     /* find the user by id */
     const user = await User.findById(decoded.id).select('-password');
     if (!user) {
-      return comutils.notFoundItem(res, msg.user.userNotFound);
+      return core.notFoundItem(res, msg.user.userNotFound);
     }
     const userInfo = {
       _id: user._id,
@@ -35,7 +39,7 @@ const createTax = async (req, res) => {
     const { taxName, taxCode, taxType, taxStatus, taxPercentage, description } = value;
     const existingTax = await Tax.findOne({ taxName });
     if (existingTax) {
-      return comutils.validateFields(res, msg.tax.taxAlreadyExist);
+      return core.validateFields(res, msg.tax.taxAlreadyExist);
     }
 
     /* new tax */
@@ -58,10 +62,15 @@ const createTax = async (req, res) => {
       message: msg.tax.newTaxCreated,
     });
   } catch (error) {
-    return comutils.sendErrorResponse(res, error);
+    return core.sendErrorResponse(res, error);
   }
 };
 
+/*
+ * @ API - list of Taxes
+ * @ method - GET
+ * @ end point - http://localhost:4000/api/tax/list
+ */
 const listOfTaxes = async (req, res) => {
   try {
     /* find all the taxes */
@@ -71,7 +80,7 @@ const listOfTaxes = async (req, res) => {
       tax: listOfTax,
     });
   } catch (error) {
-    return comutils.sendErrorResponse(res, error);
+    return core.sendErrorResponse(res, error);
   }
 };
 
