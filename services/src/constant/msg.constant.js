@@ -10,18 +10,21 @@ const server = {
   notFound: 'The API url not found.',
 };
 
+const common = {
+  requireEmail: 'Email addesss should not be blank.',
+  validateUserEmail: 'Please enter a valid email address',
+  requirePassword: 'Password should not be blank.',
+  minimumPassword: 'Password must be at least 6 characters.',
+  requirePhone: 'Phone number should not be blank.',
+  minimumPhone: 'Phone must be at least 10 characters.',
+};
+
 const user = {
   requireFirstName: 'First Name should not be blank.',
   requireLastName: 'Last Name should not be blank.',
-  requirePhone: 'Phone number should not be blank.',
-  requireEmail: 'Email addesss should not be blank.',
-  requirePassword: 'Password should not be blank.',
   requireOldPassword: 'Old password should not be blank.',
   requireNewPassword: 'New password should not be blank.',
   requireRole: 'Role should be select a option.',
-  validateUserEmail: 'Please enter a valid email address',
-  minimumPassword: 'Password must be at least 6 characters.',
-  minimumPhone: 'Phone must be at least 10 characters.',
   oldMinimumPassword: 'Old password should be at least 6 characters.',
   newMinimumPassword: 'New password should be at least 6 characters.',
   emailAlreadyExist: 'Provided email is already associated with another user.',
@@ -60,10 +63,6 @@ const suplr = {
   requireId: 'Tax name should not be blank.',
   requireName: 'Tax code should not be blank.',
   requireCompany: 'Tax type should not be blank.',
-  requireEmail: 'Email addesss should not be blank.',
-  validateSupplierEmail: 'Please enter a valid email address',
-  requirePhone: 'Phone number should not be blank.',
-  minimumPhone: 'Phone must be at least 10 characters.',
   supplierAlreadyExist: 'Provided supplier is already exist in the system.',
   newSupplierCreated: 'New supplier item created successfully.',
 };
@@ -71,6 +70,7 @@ const suplr = {
 module.exports = {
   db,
   server,
+  common,
   user,
   tax,
   suplr,

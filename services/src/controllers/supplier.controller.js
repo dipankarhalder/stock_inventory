@@ -9,7 +9,7 @@ const { core } = require('../utils');
 /*
  * @ API - Create Supplier
  * @ method - POST
- * @ end point - http://localhost:4000/api/tax/new
+ * @ end point - http://localhost:4000/api/supplier/new
  */
 const createSupplier = async (req, res) => {
   try {
@@ -20,7 +20,11 @@ const createSupplier = async (req, res) => {
       abortEarly: false,
     });
     if (error) {
-      return core.validateFields(res, error.details.map((detail) => detail.message).join(', '));
+      const messages = error.details.map((detail) => ({
+        field: detail.path[0],
+        message: detail.message,
+      }));
+      return core.validateFields(res, messages);
     }
 
     /* find the user by id */
@@ -54,7 +58,6 @@ const createSupplier = async (req, res) => {
 
     /* save the supplier */
     await newSupplier.save();
-
     return res.status(StatusCodes.OK).json({
       status: StatusCodes.OK,
       tax: newSupplier,
