@@ -13,7 +13,8 @@ const {
   listOfSuppliers,
   updateSupplier,
   viewSupplierDetails,
-  deleteSupplierDetails,
+  softDeleteSupplier,
+  finallyDeleteSupplier,
 } = require('./supplier.controller');
 
 module.exports = {
@@ -35,6 +36,7 @@ module.exports = {
     listOfSuppliers,
     updateSupplier,
     viewSupplierDetails,
-    deleteSupplierDetails,
+    softDeleteSupplier,
+    finallyDeleteSupplier,
   },
 };
