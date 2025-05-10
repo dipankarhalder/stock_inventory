@@ -3,8 +3,11 @@ const Schema = mongoose.Schema;
 
 const { role } = require('../constant');
 
-const taxtypes = [role.taxesTypes.inclusive, role.taxesTypes.exclusive];
-const taxstatuses = [role.taxesStatus.active, role.taxesStatus.inactive];
+const taxtypes = [
+  role.taxesTypes.inclusive,
+  role.taxesTypes.exclusive,
+];
+const mainStatus = [role.coreStatus.active, role.coreStatus.inactive];
 
 /* Tax model schema */
 const TaxSchema = new Schema(
@@ -26,8 +29,8 @@ const TaxSchema = new Schema(
     },
     taxStatus: {
       type: String,
-      enum: taxstatuses,
-      default: role.taxesStatus.active,
+      enum: mainStatus,
+      default: role.coreStatus.active,
     },
     taxPercentage: {
       type: String,
