@@ -68,8 +68,14 @@ router.patch(
 router.patch(
   routes.paths.supplierItem,
   authToken,
-  authRole([SUPER]),
-  supplier.deleteSupplierDetails,
+  authRole([SUPER, ADMIN]),
+  supplier.softDeleteSupplier,
+);
+router.delete(
+  routes.paths.supplierItem,
+  authToken,
+  authRole([SUPER, ADMIN]),
+  supplier.finallyDeleteSupplier,
 );
 
 module.exports = {

@@ -42,14 +42,14 @@ const createSupplier = async (req, res) => {
       role: user.role,
     };
 
-    /* find the tax item by name */
+    /* find the supplier item by name */
     const { supId, name, company, email, phone } = value;
-    const existingTax = await Supplier.findOne({ supId });
-    if (existingTax) {
+    const existingItem = await Supplier.findOne({ supId });
+    if (existingItem) {
       return core.validateFields(res, msg.suplr.supplierAlreadyExist);
     }
 
-    /* new tax */
+    /* new supplier */
     const newSupplier = new Supplier({
       supId,
       name,
@@ -205,11 +205,11 @@ const updateSupplier = async (req, res) => {
 };
 
 /*
- * @ API - supplier delete
+ * @ API - supplier soft delete
  * @ method - PATCH
  * @ end point - http://localhost:4000/api/supplier/:id
  */
-const deleteSupplierDetails = async (req, res) => {
+const softDeleteSupplier = async (req, res) => {
   try {
     const supplierId = req.params.id;
     const { status } = req.body;
@@ -247,10 +247,44 @@ const deleteSupplierDetails = async (req, res) => {
   }
 };
 
+/*
+ * @ API - delete supplier
+ * @ method - DELETE
+ * @ end point - http://localhost:4000/api/supplier/:id
+ */
+const finallyDeleteSupplier = async (req, res) => {
+  try {
+    const decoded = req.user;
+    const supplierId = req.params.id;
+
+    /* validate that the user exists */
+    const user = await User.findById(decoded.id).select('-password');
+    if (!user) {
+      return core.notFoundItem(res, msg.user.userNotFound);
+    }
+
+    /* check if the supplier exists */
+    const supplierDetails = await Supplier.findById(supplierId);
+    if (!supplierDetails) {
+      return core.notFoundItem(res, msg.suplr.notFoundItem);
+    }
+
+    /* delete the supplier */
+    await Supplier.deleteOne({ _id: supplierId });
+    return res.status(StatusCodes.OK).json({
+      status: StatusCodes.OK,
+      message: msg.suplr.updateSupplier,
+    });
+  } catch (error) {
+    return core.sendErrorResponse(res, error);
+  }
+};
+
 module.exports = {
   createSupplier,
   listOfSuppliers,
   viewSupplierDetails,
   updateSupplier,
-  deleteSupplierDetails,
+  softDeleteSupplier,
+  finallyDeleteSupplier,
 };
