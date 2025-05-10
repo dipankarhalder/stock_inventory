@@ -61,7 +61,7 @@ const createTax = async (req, res) => {
     await newTaxs.save();
     return res.status(StatusCodes.OK).json({
       status: StatusCodes.OK,
-      tax: newTaxs,
+      data: newTaxs,
       message: msg.tax.newTaxCreated,
     });
   } catch (error) {
@@ -80,7 +80,7 @@ const listOfTaxes = async (req, res) => {
     const listOfTax = await Tax.find();
     return res.status(StatusCodes.OK).json({
       status: StatusCodes.OK,
-      tax: listOfTax,
+      data: listOfTax,
     });
   } catch (error) {
     return core.sendErrorResponse(res, error);
