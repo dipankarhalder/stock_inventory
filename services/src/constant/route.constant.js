@@ -20,6 +20,11 @@ const paths = {
   newStatus: '/status/new',
   listStatus: '/status/list',
   statusItem: '/status/:id',
+
+  /* supplier */
+  newSupplier: '/supplier/new',
+  listSupplier: '/supplier/list',
+  supplierItem: '/supplier/:id',
 };
 
 module.exports = {

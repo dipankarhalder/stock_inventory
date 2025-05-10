@@ -2,9 +2,10 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { env } = require('../config');
+const { role } = require('../constant');
 
 const saltNum = 10;
-const roles = ['super_admin', 'admin', 'staff'];
+const roles = [role.userRole.SUPER, role.userRole.ADMIN, role.userRole.STUFF];
 
 /* User model schema */
 const UserSchema = new mongoose.Schema(
@@ -37,7 +38,7 @@ const UserSchema = new mongoose.Schema(
     role: {
       type: String,
       enum: roles,
-      default: 'super_admin',
+      default: role.userRole.SUPER,
     },
     address: {
       area: {
