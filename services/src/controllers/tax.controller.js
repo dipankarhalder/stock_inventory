@@ -72,15 +72,30 @@ const createTax = async (req, res) => {
 /*
  * @ API - list of Taxes
  * @ method - GET
- * @ end point - http://localhost:4000/api/tax/list
+ * @ end point -
+ * http://localhost:4000/api/tax/list                     -> without query param
+ * http://localhost:4000/api/tax/list?page=1&limit=10     -> with query param
  */
 const listOfTaxes = async (req, res) => {
   try {
+    /* pagination code */
+    const page = parseInt(req.query.page, 10) || 1;
+    const limit = parseInt(req.query.limit, 10) || 10;
+    const skip = (page - 1) * limit;
+
+    const [listOfTax, totalItems] = await Promise.all([Tax.find().skip(skip).limit(limit), Tax.countDocuments()]);
+    const totalPages = Math.ceil(totalItems / limit);
+
     /* find all the taxes */
-    const listOfTax = await Tax.find();
     return res.status(StatusCodes.OK).json({
       status: StatusCodes.OK,
       data: listOfTax,
+      pagination: {
+        totalItems,
+        totalPages,
+        currentPage: page,
+        pageSize: limit,
+      },
     });
   } catch (error) {
     return core.sendErrorResponse(res, error);

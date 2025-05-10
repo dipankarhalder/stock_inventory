@@ -1,7 +1,12 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+const { role } = require('../constant');
+
+const mainStatus = [role.coreStatus.active, role.coreStatus.inactive];
 
 /* Supplier model schema */
-const SupplierSchema = new mongoose.Schema(
+const SupplierSchema = new Schema(
   {
     supId: {
       type: String,
@@ -27,6 +32,11 @@ const SupplierSchema = new mongoose.Schema(
     phone: {
       type: String,
       required: true,
+    },
+    status: {
+      type: String,
+      enum: mainStatus,
+      default: role.coreStatus.active,
     },
     user: {
       _id: mongoose.Schema.Types.ObjectId,

@@ -1,7 +1,20 @@
-const { userSignup, userSignin, userSignout } = require('./auth.controller');
-const { getProfile, updatePassword } = require('./profile.controller');
+const {
+  userSignup,
+  userSignin,
+  userSignout,
+} = require('./auth.controller');
+const {
+  getProfile,
+  updatePassword,
+} = require('./profile.controller');
 const { createTax, listOfTaxes } = require('./tax.controller');
-const { createSupplier, listOfSuppliers } = require('./supplier.controller');
+const {
+  createSupplier,
+  listOfSuppliers,
+  updateSupplier,
+  viewSupplierDetails,
+  deleteSupplierDetails,
+} = require('./supplier.controller');
 
 module.exports = {
   auth: {
@@ -20,5 +33,8 @@ module.exports = {
   supplier: {
     createSupplier,
     listOfSuppliers,
+    updateSupplier,
+    viewSupplierDetails,
+    deleteSupplierDetails,
   },
 };

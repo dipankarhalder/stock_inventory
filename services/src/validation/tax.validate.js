@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const { msg } = require('../constant');
+const { msg, role } = require('../constant');
 const { valid } = require('../utils');
 
 const taxInfoSchema = Joi.object({
@@ -11,12 +11,18 @@ const taxInfoSchema = Joi.object({
     'string.empty': msg.tax.requireTaxCode,
     'string.max': msg.tax.maximumTaxCode,
   }),
-  taxType: Joi.string().valid('exclusive', 'inclusive').required().messages({
-    'any.only': msg.tax.requireTaxTpye,
-  }),
-  taxStatus: Joi.string().valid('active', 'inactive').required().messages({
-    'any.only': msg.tax.requireTaxStatus,
-  }),
+  taxType: Joi.string()
+    .valid(role.taxesTypes.inclusive, role.taxesTypes.exclusive)
+    .required()
+    .messages({
+      'any.only': msg.tax.requireTaxTpye,
+    }),
+  taxStatus: Joi.string()
+    .valid(role.coreStatus.active, role.coreStatus.inactive)
+    .required()
+    .messages({
+      'any.only': msg.tax.requireTaxStatus,
+    }),
   taxPercentage: valid.requiredString(msg.tax.requireTaxPercent),
   description: Joi.string().max(255).messages({
     'string.max': msg.tax.maximumDesc,

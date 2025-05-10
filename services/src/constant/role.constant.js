@@ -9,7 +9,7 @@ const taxesTypes = {
   inclusive: 'inclusive',
 };
 
-const taxesStatus = {
+const coreStatus = {
   active: 'active',
   inactive: 'inactive',
 };
@@ -17,5 +17,5 @@ const taxesStatus = {
 module.exports = {
   userRole,
   taxesTypes,
-  taxesStatus,
+  coreStatus,
 };

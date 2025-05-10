@@ -27,11 +27,14 @@ const user = {
   requireRole: 'Role should be select a option.',
   oldMinimumPassword: 'Old password should be at least 6 characters.',
   newMinimumPassword: 'New password should be at least 6 characters.',
-  emailAlreadyExist: 'Provided email is already associated with another user.',
-  phoneAlreadyExist: 'Provided phone no is already associated with another user.',
+  emailAlreadyExist:
+    'Provided email is already associated with another user.',
+  phoneAlreadyExist:
+    'Provided phone no is already associated with another user.',
   userNotFound: 'The user is not found.',
   userWrongPassword: 'Entered password is invalid, please try again.',
-  compareBothPassword: 'New password should be different from old password',
+  compareBothPassword:
+    'New password should be different from old password',
   newUserCreated: 'New user created successfully.',
   updatedUserPassword: 'Password successfully updated.',
   updatedUserProfile: 'Profile successfully updated.',
@@ -54,7 +57,8 @@ const tax = {
   requireTaxTpye: 'Tax type should not be blank.',
   requireTaxStatus: 'Tax status should not be blank.',
   requireTaxPercent: 'Tax percentage should not be blank.',
-  taxAlreadyExist: 'Provided tax is already associated with another item.',
+  taxAlreadyExist:
+    'Provided tax is already associated with another item.',
   maximumDesc: 'Maximum 255 characters allow for description',
   newTaxCreated: 'New tax item created successfully.',
 };
@@ -63,8 +67,13 @@ const suplr = {
   requireId: 'Tax name should not be blank.',
   requireName: 'Tax code should not be blank.',
   requireCompany: 'Tax type should not be blank.',
-  supplierAlreadyExist: 'Provided supplier is already exist in the system.',
+  supplierAlreadyExist:
+    'Provided supplier is already exist in the system.',
   newSupplierCreated: 'New supplier item created successfully.',
+  supplierUpdated: 'Supplier information successfully updated.',
+  updateSupplier: 'Supplier successfully deleted.',
+  invalidStatus: 'Invalid status value.',
+  notFoundItem: 'Supplier not found.',
 };
 
 module.exports = {

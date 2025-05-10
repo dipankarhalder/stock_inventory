@@ -2,7 +2,7 @@ const { StatusCodes } = require('http-status-codes');
 
 const Supplier = require('../models/supplier.model');
 const User = require('../models/user.model');
-const { msg } = require('../constant');
+const { msg, role } = require('../constant');
 const { suppliers } = require('../validation');
 const { core } = require('../utils');
 
@@ -16,9 +16,12 @@ const createSupplier = async (req, res) => {
     const decoded = req.user;
 
     /* validate request body */
-    const { error, value } = suppliers.supplierInfoSchema.validate(req.body, {
-      abortEarly: false,
-    });
+    const { error, value } = suppliers.supplierInfoSchema.validate(
+      req.body,
+      {
+        abortEarly: false,
+      },
+    );
     if (error) {
       const messages = error.details.map((detail) => ({
         field: detail.path[0],
@@ -71,7 +74,9 @@ const createSupplier = async (req, res) => {
 /*
  * @ API - list of supplier
  * @ method - GET
- * @ end point - http://localhost:4000/api/supplier/list  or  http://localhost:4000/api/supplier/list?page=1&limit=10
+ * @ end point -
+ * http://localhost:4000/api/supplier/list                    -> without query param
+ * http://localhost:4000/api/supplier/list?page=1&limit=10    -> with query param
  */
 const listOfSuppliers = async (req, res) => {
   try {
@@ -80,7 +85,17 @@ const listOfSuppliers = async (req, res) => {
     const limit = parseInt(req.query.limit, 10) || 10;
     const skip = (page - 1) * limit;
 
-    const [supplierItems, totalItems] = await Promise.all([Supplier.find().skip(skip).limit(limit), Supplier.countDocuments()]);
+    /* filter by status (active, not-active) */
+    const statusFilter = req.query.status;
+    const filter = {};
+    if (statusFilter === 'active' || statusFilter === 'inactive') {
+      filter.status = statusFilter;
+    }
+
+    const [supplierItems, totalItems] = await Promise.all([
+      Supplier.find(filter).skip(skip).limit(limit),
+      Supplier.countDocuments(filter),
+    ]);
     const totalPages = Math.ceil(totalItems / limit);
 
     /* find all the supplier */
@@ -99,7 +114,143 @@ const listOfSuppliers = async (req, res) => {
   }
 };
 
+/*
+ * @ API - supplier details
+ * @ method - GET
+ * @ end point - http://localhost:4000/api/supplier/:id
+ */
+const viewSupplierDetails = async (req, res) => {
+  try {
+    const supplierId = req.params.id;
+    const supplierDetails = await Supplier.findById(supplierId);
+    return res.status(StatusCodes.OK).json({
+      status: StatusCodes.OK,
+      data: supplierDetails,
+    });
+  } catch (error) {
+    return core.sendErrorResponse(res, error);
+  }
+};
+
+/*
+ * @ API - update supplier
+ * @ method - PATCH
+ * @ end point - http://localhost:4000/api/supplier/:id
+ */
+const updateSupplier = async (req, res) => {
+  try {
+    const decoded = req.user;
+    const supplierId = req.params.id;
+
+    /* validate request body */
+    const { error, value } = suppliers.supplierInfoSchema.validate(
+      req.body,
+      {
+        abortEarly: false,
+      },
+    );
+
+    if (error) {
+      const messages = error.details.map((detail) => ({
+        field: detail.path[0],
+        message: detail.message,
+      }));
+      return core.validateFields(res, messages);
+    }
+
+    /* validate user */
+    const user = await User.findById(decoded.id).select('-password');
+    if (!user) {
+      return core.notFoundItem(res, msg.user.userNotFound);
+    }
+
+    /* Check for duplicate supId (but ignore the current one) */
+    const existing = await Supplier.findOne({
+      supId: value.supId,
+      _id: { $ne: supplierId },
+    });
+    if (existing) {
+      return core.validateFields(res, msg.suplr.supplierAlreadyExist);
+    }
+
+    const userInfo = {
+      _id: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      role: user.role,
+    };
+
+    /* update supplier */
+    const updatedSupplier = await Supplier.findByIdAndUpdate(
+      supplierId,
+      {
+        ...value,
+        user: userInfo,
+      },
+      { new: true },
+    );
+
+    if (!updatedSupplier) {
+      return core.notFoundItem(res, msg.suplr.notFoundItem);
+    }
+
+    return res.status(StatusCodes.OK).json({
+      status: StatusCodes.OK,
+      data: updatedSupplier,
+      message: msg.suplr.supplierUpdated,
+    });
+  } catch (error) {
+    return core.sendErrorResponse(res, error);
+  }
+};
+
+/*
+ * @ API - supplier delete
+ * @ method - PATCH
+ * @ end point - http://localhost:4000/api/supplier/:id
+ */
+const deleteSupplierDetails = async (req, res) => {
+  try {
+    const supplierId = req.params.id;
+    const { status } = req.body;
+
+    const validStatuses = [
+      role.coreStatus.active,
+      role.coreStatus.inactive,
+    ];
+    if (!validStatuses.includes(status)) {
+      return res.status(StatusCodes.BAD_REQUEST).json({
+        status: StatusCodes.BAD_REQUEST,
+        message: msg.suplr.invalidStatus,
+      });
+    }
+
+    const updatedSupplier = await Supplier.findByIdAndUpdate(
+      supplierId,
+      { status },
+      { new: true },
+    );
+
+    if (!updatedSupplier) {
+      return res.status(StatusCodes.NOT_FOUND).json({
+        status: StatusCodes.NOT_FOUND,
+        message: msg.suplr.notFoundItem,
+      });
+    }
+
+    return res.status(StatusCodes.OK).json({
+      status: StatusCodes.OK,
+      message: msg.suplr.updateSupplier,
+    });
+  } catch (error) {
+    return core.sendErrorResponse(res, error);
+  }
+};
+
 module.exports = {
   createSupplier,
   listOfSuppliers,
+  viewSupplierDetails,
+  updateSupplier,
+  deleteSupplierDetails,
 };
