@@ -22,6 +22,7 @@ router.get(routes.paths.listTaxs, authToken, authRole([SUPER, ADMIN]), taxs.list
 
 /* supplier */
 router.post(routes.paths.newSupplier, authToken, authRole([SUPER, ADMIN]), supplier.createSupplier);
+router.get(routes.paths.listSupplier, authToken, authRole([SUPER, ADMIN]), supplier.listOfSuppliers);
 
 module.exports = {
   rootApiRouter: router,
