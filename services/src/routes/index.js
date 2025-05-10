@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const { routes, role } = require('../constant');
-const { auth, profile, taxs } = require('../controllers');
+const { auth, profile, taxs, supplier } = require('../controllers');
 const { authToken, authRole } = require('../middleware');
 
 const { SUPER, ADMIN, STUFF } = role.userRole;
@@ -19,6 +19,9 @@ router.patch(routes.paths.updatepassword, authToken, authRole([SUPER, ADMIN, STU
 /* taxes */
 router.post(routes.paths.newTax, authToken, authRole([SUPER, ADMIN]), taxs.createTax);
 router.get(routes.paths.listTaxs, authToken, authRole([SUPER, ADMIN]), taxs.listOfTaxes);
+
+/* supplier */
+router.post(routes.paths.newSupplier, authToken, authRole([SUPER, ADMIN]), supplier.createSupplier);
 
 module.exports = {
   rootApiRouter: router,

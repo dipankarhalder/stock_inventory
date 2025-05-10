@@ -4,6 +4,18 @@ const userRole = {
   STUFF: 'staff',
 };
 
+const taxesTypes = {
+  exclusive: 'exclusive',
+  inclusive: 'inclusive',
+};
+
+const taxesStatus = {
+  active: 'active',
+  inactive: 'inactive',
+};
+
 module.exports = {
   userRole,
+  taxesTypes,
+  taxesStatus,
 };
