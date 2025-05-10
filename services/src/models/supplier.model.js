@@ -7,6 +7,7 @@ const SupplierSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
+      unique: true,
     },
     name: {
       type: String,
@@ -21,12 +22,17 @@ const SupplierSchema = new mongoose.Schema(
     email: {
       type: String,
       required: true,
-      unique: true,
       trim: true,
     },
     phone: {
       type: String,
       required: true,
+    },
+    user: {
+      _id: mongoose.Schema.Types.ObjectId,
+      firstName: String,
+      lastName: String,
+      role: String,
     },
   },
   {

@@ -56,9 +56,22 @@ const tax = {
   newTaxCreated: 'New tax item created successfully.',
 };
 
+const suplr = {
+  requireId: 'Tax name should not be blank.',
+  requireName: 'Tax code should not be blank.',
+  requireCompany: 'Tax type should not be blank.',
+  requireEmail: 'Email addesss should not be blank.',
+  validateSupplierEmail: 'Please enter a valid email address',
+  requirePhone: 'Phone number should not be blank.',
+  minimumPhone: 'Phone must be at least 10 characters.',
+  supplierAlreadyExist: 'Provided supplier is already exist in the system.',
+  newSupplierCreated: 'New supplier item created successfully.',
+};
+
 module.exports = {
   db,
   server,
   user,
   tax,
+  suplr,
 };
