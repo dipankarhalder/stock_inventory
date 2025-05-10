@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const taxtypes = ['exclusive', 'inclusive'];
 const taxstatuses = ['active', 'inactive'];
 
+/* Tax model schema */
 const TaxSchema = new Schema(
   {
     taxName: {
