@@ -1,39 +1,21 @@
 const Joi = require('joi');
 const { msg, role } = require('../constant');
+const { valid } = require('../utils');
 
 const userInfoSchema = Joi.object({
-  firstName: Joi.string().required().messages({
-    'string.empty': msg.user.requireFirstName,
-  }),
-  lastName: Joi.string().required().messages({
-    'string.empty': msg.user.requireLastName,
-  }),
-  email: Joi.string().email().required().messages({
-    'string.empty': msg.user.requireEmail,
-    'string.email': msg.user.validateUserEmail,
-  }),
-  password: Joi.string().min(6).required().messages({
-    'string.empty': msg.user.requirePassword,
-    'string.min': msg.user.minimumPassword,
-  }),
-  phone: Joi.string().min(10).required().messages({
-    'string.empty': msg.user.requirePhone,
-    'string.min': msg.user.minimumPhone,
-  }),
+  firstName: valid.requiredString(msg.user.requireFirstName),
+  lastName: valid.requiredString(msg.user.requireLastName),
+  email: valid.email,
+  password: valid.password,
+  phone: valid.phone,
   role: Joi.string().valid(role.userRole.SUPER, role.userRole.ADMIN, role.userRole.STUFF).required().messages({
     'any.only': msg.user.requireRole,
   }),
 });
 
 const userLoginSchema = Joi.object({
-  email: Joi.string().email().required().messages({
-    'string.empty': msg.user.requireEmail,
-    'string.email': msg.user.validateUserEmail,
-  }),
-  password: Joi.string().min(6).required().messages({
-    'string.empty': msg.user.requirePassword,
-    'string.min': msg.user.minimumPassword,
-  }),
+  email: valid.email,
+  password: valid.password,
 });
 
 const passwordSchema = Joi.object({

@@ -20,7 +20,11 @@ const createTax = async (req, res) => {
       abortEarly: false,
     });
     if (error) {
-      return core.validateFields(res, error.details.map((detail) => detail.message).join(', '));
+      const messages = error.details.map((detail) => ({
+        field: detail.path[0],
+        message: detail.message,
+      }));
+      return core.validateFields(res, messages);
     }
 
     /* find the user by id */
@@ -55,7 +59,6 @@ const createTax = async (req, res) => {
 
     /* save the tax */
     await newTaxs.save();
-
     return res.status(StatusCodes.OK).json({
       status: StatusCodes.OK,
       tax: newTaxs,
