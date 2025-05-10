@@ -17,7 +17,11 @@ const userSignup = async (req, res) => {
       abortEarly: false,
     });
     if (error) {
-      return core.validateFields(res, error.details.map((detail) => detail.message).join(', '));
+      const messages = error.details.map((detail) => ({
+        field: detail.path[0],
+        message: detail.message,
+      }));
+      return core.validateFields(res, messages);
     }
 
     /* find the existing user via email */
@@ -40,7 +44,6 @@ const userSignup = async (req, res) => {
 
     /* save the user */
     await user.save();
-
     return res.status(StatusCodes.OK).json({
       status: StatusCodes.OK,
       message: msg.user.newUserCreated,
@@ -62,7 +65,11 @@ const userSignin = async (req, res) => {
       abortEarly: false,
     });
     if (error) {
-      return core.validateFields(res, error.details.map((detail) => detail.message).join(', '));
+      const messages = error.details.map((detail) => ({
+        field: detail.path[0],
+        message: detail.message,
+      }));
+      return core.validateFields(res, messages);
     }
 
     /* find the existing user via email */
