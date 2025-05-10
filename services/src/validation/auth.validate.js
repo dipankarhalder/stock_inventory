@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const { msg } = require('../constant');
+const { msg, role } = require('../constant');
 
 const userInfoSchema = Joi.object({
   firstName: Joi.string().required().messages({
@@ -20,7 +20,7 @@ const userInfoSchema = Joi.object({
     'string.empty': msg.user.requirePhone,
     'string.min': msg.user.minimumPhone,
   }),
-  role: Joi.string().valid('super_admin', 'admin', 'staff').required().messages({
+  role: Joi.string().valid(role.userRole.SUPER, role.userRole.ADMIN, role.userRole.STUFF).required().messages({
     'any.only': msg.user.requireRole,
   }),
 });

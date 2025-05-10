@@ -38,6 +38,7 @@ const user = {
   existUserEmail: 'Provided email address is not exist!',
   invalidToken: 'Invalid token, please login again.',
   accessDenied: 'Access denied. No token provided.',
+  accessRole: 'You are not authorized to access this resource.',
   notUserAccess: "Access denied. you don't have permission.",
   expireUserToken: 'The token is expired or invalid.',
 };
