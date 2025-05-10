@@ -2,7 +2,6 @@ const { StatusCodes } = require('http-status-codes');
 const User = require('../models/user.model');
 const { env } = require('../config');
 const { msg } = require('../constant');
-const { auth } = require('../validation');
 const { core } = require('../utils');
 
 /*
@@ -13,16 +12,7 @@ const { core } = require('../utils');
 const userSignup = async (req, res) => {
   try {
     /* validate request body */
-    const { error, value } = auth.userInfoSchema.validate(req.body, {
-      abortEarly: false,
-    });
-    if (error) {
-      const messages = error.details.map((detail) => ({
-        field: detail.path[0],
-        message: detail.message,
-      }));
-      return core.validateFields(res, messages);
-    }
+    const value = req.validatedBody;
 
     /* find the existing user via email */
     const existingEmail = await User.findOne({
@@ -61,16 +51,7 @@ const userSignup = async (req, res) => {
 const userSignin = async (req, res) => {
   try {
     /* validate request body */
-    const { error, value } = auth.userLoginSchema.validate(req.body, {
-      abortEarly: false,
-    });
-    if (error) {
-      const messages = error.details.map((detail) => ({
-        field: detail.path[0],
-        message: detail.message,
-      }));
-      return core.validateFields(res, messages);
-    }
+    const value = req.validatedBody;
 
     /* find the existing user via email */
     const user = await User.findOne({
