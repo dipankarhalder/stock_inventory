@@ -1,5 +1,11 @@
 const { StatusCodes } = require('http-status-codes');
 
+const Supplier = require('../models/supplier.model');
+const User = require('../models/user.model');
+const { msg } = require('../constant');
+const { suppliers } = require('../validation');
+const { core } = require('../utils');
+
 /*
  * @ API - Create Supplier
  * @ method - POST
@@ -10,7 +16,7 @@ const createSupplier = async (req, res) => {
     const decoded = req.user;
 
     /* validate request body */
-    const { error, value } = taxs.taxInfoSchema.validate(req.body, {
+    const { error, value } = suppliers.supplierInfoSchema.validate(req.body, {
       abortEarly: false,
     });
     if (error) {
@@ -30,30 +36,29 @@ const createSupplier = async (req, res) => {
     };
 
     /* find the tax item by name */
-    const { taxName, taxCode, taxType, taxStatus, taxPercentage, description } = value;
-    const existingTax = await Tax.findOne({ taxName });
+    const { supId, name, company, email, phone } = value;
+    const existingTax = await Supplier.findOne({ supId });
     if (existingTax) {
-      return core.validateFields(res, msg.tax.taxAlreadyExist);
+      return core.validateFields(res, msg.suplr.supplierAlreadyExist);
     }
 
     /* new tax */
-    const newTaxs = new Tax({
-      taxName,
-      taxCode,
-      taxType,
-      taxStatus,
-      taxPercentage,
-      description,
+    const newSupplier = new Supplier({
+      supId,
+      name,
+      company,
+      email,
+      phone,
       user: userInfo,
     });
 
-    /* save the tax */
-    await newTaxs.save();
+    /* save the supplier */
+    await newSupplier.save();
 
     return res.status(StatusCodes.OK).json({
       status: StatusCodes.OK,
-      tax: newTaxs,
-      message: msg.tax.newTaxCreated,
+      tax: newSupplier,
+      message: msg.suplr.newSupplierCreated,
     });
   } catch (error) {
     return core.sendErrorResponse(res, error);
@@ -62,5 +67,4 @@ const createSupplier = async (req, res) => {
 
 module.exports = {
   createSupplier,
-  listOfTaxes,
 };

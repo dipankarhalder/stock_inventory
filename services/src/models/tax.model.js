@@ -1,8 +1,10 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const taxtypes = ['exclusive', 'inclusive'];
-const taxstatuses = ['active', 'inactive'];
+const { role } = require('../constant');
+
+const taxtypes = [role.taxesTypes.inclusive, role.taxesTypes.exclusive];
+const taxstatuses = [role.taxesStatus.active, role.taxesStatus.inactive];
 
 /* Tax model schema */
 const TaxSchema = new Schema(
@@ -20,12 +22,12 @@ const TaxSchema = new Schema(
     taxType: {
       type: String,
       enum: taxtypes,
-      default: 'inclusive',
+      default: role.taxesTypes.inclusive,
     },
     taxStatus: {
       type: String,
       enum: taxstatuses,
-      default: 'active',
+      default: role.taxesStatus.active,
     },
     taxPercentage: {
       type: String,
