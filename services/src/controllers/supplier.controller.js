@@ -1,10 +1,7 @@
 const { StatusCodes } = require('http-status-codes');
-
 const Supplier = require('../models/supplier.model');
-const User = require('../models/user.model');
 const { msg, role } = require('../constant');
-const { suppliers } = require('../validation');
-const { core } = require('../utils');
+const { core, userVal } = require('../utils');
 
 /*
  * @ API - Create Supplier
@@ -14,27 +11,12 @@ const { core } = require('../utils');
 const createSupplier = async (req, res) => {
   try {
     const decoded = req.user;
-
-    /* validate request body */
-    const { error, value } = suppliers.supplierInfoSchema.validate(
-      req.body,
-      {
-        abortEarly: false,
-      },
-    );
-    if (error) {
-      const messages = error.details.map((detail) => ({
-        field: detail.path[0],
-        message: detail.message,
-      }));
-      return core.validateFields(res, messages);
-    }
+    const value = req.validatedBody;
 
     /* find the user by id */
-    const user = await User.findById(decoded.id).select('-password');
-    if (!user) {
-      return core.notFoundItem(res, msg.user.userNotFound);
-    }
+    const user = await userVal.getUserOrRespondNotFound(decoded.id, res);
+    if (!user) return;
+
     const userInfo = {
       _id: user._id,
       firstName: user.firstName,
@@ -141,28 +123,11 @@ const updateSupplier = async (req, res) => {
   try {
     const decoded = req.user;
     const supplierId = req.params.id;
-
-    /* validate request body */
-    const { error, value } = suppliers.supplierInfoSchema.validate(
-      req.body,
-      {
-        abortEarly: false,
-      },
-    );
-
-    if (error) {
-      const messages = error.details.map((detail) => ({
-        field: detail.path[0],
-        message: detail.message,
-      }));
-      return core.validateFields(res, messages);
-    }
+    const value = req.validatedBody;
 
     /* validate user */
-    const user = await User.findById(decoded.id).select('-password');
-    if (!user) {
-      return core.notFoundItem(res, msg.user.userNotFound);
-    }
+    const user = await userVal.getUserOrRespondNotFound(decoded.id, res);
+    if (!user) return;
 
     /* Check for duplicate supId (but ignore the current one) */
     const existing = await Supplier.findOne({
@@ -214,10 +179,7 @@ const softDeleteSupplier = async (req, res) => {
     const supplierId = req.params.id;
     const { status } = req.body;
 
-    const validStatuses = [
-      role.coreStatus.active,
-      role.coreStatus.inactive,
-    ];
+    const validStatuses = [role.coreStatus.active, role.coreStatus.inactive];
     if (!validStatuses.includes(status)) {
       return res.status(StatusCodes.BAD_REQUEST).json({
         status: StatusCodes.BAD_REQUEST,
@@ -225,11 +187,7 @@ const softDeleteSupplier = async (req, res) => {
       });
     }
 
-    const updatedSupplier = await Supplier.findByIdAndUpdate(
-      supplierId,
-      { status },
-      { new: true },
-    );
+    const updatedSupplier = await Supplier.findByIdAndUpdate(supplierId, { status }, { new: true });
 
     if (!updatedSupplier) {
       return res.status(StatusCodes.NOT_FOUND).json({
@@ -258,10 +216,8 @@ const finallyDeleteSupplier = async (req, res) => {
     const supplierId = req.params.id;
 
     /* validate that the user exists */
-    const user = await User.findById(decoded.id).select('-password');
-    if (!user) {
-      return core.notFoundItem(res, msg.user.userNotFound);
-    }
+    const user = await userVal.getUserOrRespondNotFound(decoded.id, res);
+    if (!user) return;
 
     /* check if the supplier exists */
     const supplierDetails = await Supplier.findById(supplierId);

@@ -3,10 +3,7 @@ const Schema = mongoose.Schema;
 
 const { role } = require('../constant');
 
-const taxtypes = [
-  role.taxesTypes.inclusive,
-  role.taxesTypes.exclusive,
-];
+const taxtypes = [role.taxesTypes.inclusive, role.taxesTypes.exclusive];
 const mainStatus = [role.coreStatus.active, role.coreStatus.inactive];
 
 /* Tax model schema */

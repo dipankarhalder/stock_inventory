@@ -1,8 +1,7 @@
 const { StatusCodes } = require('http-status-codes');
 const User = require('../models/user.model');
 const { msg } = require('../constant');
-const { auth } = require('../validation');
-const { core } = require('../utils');
+const { core, userVal } = require('../utils');
 
 /*
  * @ API - Profile details
@@ -13,10 +12,9 @@ const getProfile = async (req, res) => {
   try {
     /* find user by id */
     const decoded = req.user;
-    const user = await User.findById(decoded.id).select('-password');
-    if (!user) {
-      return core.notFoundItem(res, msg.user.userNotFound);
-    }
+    const user = await userVal.getUserOrRespondNotFound(decoded.id, res);
+    if (!user) return;
+
     return res.status(StatusCodes.OK).json({
       status: StatusCodes.OK,
       data: user,
@@ -34,18 +32,7 @@ const getProfile = async (req, res) => {
 const updatePassword = async (req, res) => {
   try {
     const decoded = req.user;
-
-    /* validate request body */
-    const { error, value } = auth.passwordSchema.validate(req.body, {
-      abortEarly: false,
-    });
-    if (error) {
-      const messages = error.details.map((detail) => ({
-        field: detail.path[0],
-        message: detail.message,
-      }));
-      return core.validateFields(res, messages);
-    }
+    const value = req.validatedBody;
 
     /* find the user by id */
     const user = await User.findById(decoded.id);

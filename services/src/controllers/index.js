@@ -1,12 +1,5 @@
-const {
-  userSignup,
-  userSignin,
-  userSignout,
-} = require('./auth.controller');
-const {
-  getProfile,
-  updatePassword,
-} = require('./profile.controller');
+const { userSignup, userSignin, userSignout } = require('./auth.controller');
+const { getProfile, updatePassword } = require('./profile.controller');
 const { createTax, listOfTaxes } = require('./tax.controller');
 const {
   createSupplier,
@@ -18,7 +11,7 @@ const {
 } = require('./supplier.controller');
 
 module.exports = {
-  auth: {
+  authenticate: {
     userSignup,
     userSignin,
     userSignout,
@@ -27,7 +20,7 @@ module.exports = {
     getProfile,
     updatePassword,
   },
-  taxs: {
+  taxServ: {
     createTax,
     listOfTaxes,
   },
