@@ -6,7 +6,7 @@ const { env } = require('../config');
 const saltNum = 10;
 const roles = ['super_admin', 'admin', 'staff'];
 
-/* user model schema */
+/* User model schema */
 const UserSchema = new mongoose.Schema(
   {
     firstName: {
