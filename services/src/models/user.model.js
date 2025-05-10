@@ -5,7 +5,11 @@ const { env } = require('../config');
 const { role } = require('../constant');
 
 const saltNum = 10;
-const roles = [role.userRole.SUPER, role.userRole.ADMIN, role.userRole.STUFF];
+const roles = [
+  role.userRole.SUPER,
+  role.userRole.ADMIN,
+  role.userRole.STUFF,
+];
 
 /* User model schema */
 const UserSchema = new mongoose.Schema(
