@@ -1,10 +1,7 @@
 const { StatusCodes } = require('http-status-codes');
-
 const Tax = require('../models/tax.model');
-const User = require('../models/user.model');
 const { msg } = require('../constant');
-const { taxs } = require('../validation');
-const { core } = require('../utils');
+const { core, userVal } = require('../utils');
 
 /*
  * @ API - Create Tax
@@ -14,24 +11,12 @@ const { core } = require('../utils');
 const createTax = async (req, res) => {
   try {
     const decoded = req.user;
-
-    /* validate request body */
-    const { error, value } = taxs.taxInfoSchema.validate(req.body, {
-      abortEarly: false,
-    });
-    if (error) {
-      const messages = error.details.map((detail) => ({
-        field: detail.path[0],
-        message: detail.message,
-      }));
-      return core.validateFields(res, messages);
-    }
+    const value = req.validatedBody;
 
     /* find the user by id */
-    const user = await User.findById(decoded.id).select('-password');
-    if (!user) {
-      return core.notFoundItem(res, msg.user.userNotFound);
-    }
+    const user = await userVal.getUserOrRespondNotFound(decoded.id, res);
+    if (!user) return;
+
     const userInfo = {
       _id: user._id,
       firstName: user.firstName,
@@ -40,14 +25,7 @@ const createTax = async (req, res) => {
     };
 
     /* find the tax item by name */
-    const {
-      taxName,
-      taxCode,
-      taxType,
-      taxStatus,
-      taxPercentage,
-      description,
-    } = value;
+    const { taxName, taxCode, taxType, taxStatus, taxPercentage, description } = value;
     const existingTax = await Tax.findOne({ taxName });
     if (existingTax) {
       return core.validateFields(res, msg.tax.taxAlreadyExist);
