@@ -40,7 +40,14 @@ const createTax = async (req, res) => {
     };
 
     /* find the tax item by name */
-    const { taxName, taxCode, taxType, taxStatus, taxPercentage, description } = value;
+    const {
+      taxName,
+      taxCode,
+      taxType,
+      taxStatus,
+      taxPercentage,
+      description,
+    } = value;
     const existingTax = await Tax.findOne({ taxName });
     if (existingTax) {
       return core.validateFields(res, msg.tax.taxAlreadyExist);
@@ -83,7 +90,10 @@ const listOfTaxes = async (req, res) => {
     const limit = parseInt(req.query.limit, 10) || 10;
     const skip = (page - 1) * limit;
 
-    const [listOfTax, totalItems] = await Promise.all([Tax.find().skip(skip).limit(limit), Tax.countDocuments()]);
+    const [listOfTax, totalItems] = await Promise.all([
+      Tax.find().skip(skip).limit(limit),
+      Tax.countDocuments(),
+    ]);
     const totalPages = Math.ceil(totalItems / limit);
 
     /* find all the taxes */
