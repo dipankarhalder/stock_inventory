@@ -9,7 +9,7 @@ const {
   softDeleteSupplier,
   finallyDeleteSupplier,
 } = require('./supplier.controller');
-const { createStatus } = require('./status.controller');
+const { createStatus, getAllStatus, deleteStatus } = require('./status.controller');
 
 module.exports = {
   authenticate: {
@@ -35,5 +35,7 @@ module.exports = {
   },
   statuses: {
     createStatus,
+    getAllStatus,
+    deleteStatus,
   },
 };

@@ -51,6 +51,52 @@ const createStatus = async (req, res) => {
   }
 };
 
+/*
+ * @ API - List of status
+ * @ method - GET
+ * @ end point - http://localhost:4001/api/status/lists
+ */
+const getAllStatus = async (req, res) => {
+  try {
+    /* find all status */
+    const statuses = await Status.find();
+    return res.status(StatusCodes.OK).json({
+      status: StatusCodes.OK,
+      list: statuses,
+    });
+  } catch (error) {
+    return core.sendErrorResponse(res, error);
+  }
+};
+
+/*
+ * @ API - delete status details
+ * @ method - DELETE
+ * @ end point - http://localhost:4001/api/status/:id
+ */
+const deleteStatus = async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    /* check the status is available or not */
+    const statuss = await Status.findById(id);
+    if (!statuss) {
+      return core.notFoundItem(res, msg.stats.statusNotFound);
+    }
+
+    /* delete the status */
+    await Status.findByIdAndDelete(id);
+    return res.status(StatusCodes.OK).json({
+      status: StatusCodes.OK,
+      message: msg.stats.statusDeleted,
+    });
+  } catch (error) {
+    return core.sendErrorResponse(res, error);
+  }
+};
+
 module.exports = {
   createStatus,
+  getAllStatus,
+  deleteStatus,
 };

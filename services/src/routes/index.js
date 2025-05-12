@@ -85,6 +85,8 @@ router.post(
   authValid(statuss.statusInfoSchema),
   statuses.createStatus,
 );
+router.get(routes.paths.listStatus, authToken, authRole([SUPER, ADMIN]), statuses.getAllStatus);
+router.delete(routes.paths.statusItem, authToken, authRole([SUPER, ADMIN]), statuses.deleteStatus);
 
 module.exports = {
   rootApiRouter: router,
