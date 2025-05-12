@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 
 const { routes, role } = require('../constant');
-const { auth, taxs, suppliers } = require('../validation');
-const { authenticate, profile, taxServ, supplier } = require('../controllers');
-const { authToken, authRole, authValid } = require('../middleware');
+const { auth, taxs, suppliers, statuss } = require('../validation');
+const { authenticate, profile, taxServ, supplier, statuses } = require('../controllers');
+const { authToken, authRole, authValid } = require('../middleware'); // uploadMedia
 
 const { SUPER, ADMIN, STUFF } = role.userRole;
 
@@ -75,6 +75,15 @@ router.delete(
   authToken,
   authRole([SUPER, ADMIN]),
   supplier.finallyDeleteSupplier,
+);
+
+/* status */
+router.post(
+  routes.paths.newStatus,
+  authToken,
+  authRole([SUPER, ADMIN]),
+  authValid(statuss.statusInfoSchema),
+  statuses.createStatus,
 );
 
 module.exports = {

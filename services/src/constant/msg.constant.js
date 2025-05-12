@@ -71,6 +71,18 @@ const suplr = {
   notFoundItem: 'Supplier not found.',
 };
 
+const stats = {
+  requireTitle: 'Status title should not be blank.',
+  requireDesc: 'Status description should not be blank.',
+  maxTitle: 'Status title should not be more than 60 characters.',
+  maxDesc: 'Status description should not be more than 255 characters.',
+  statusAlreadyExist: 'Provided status is already exist.',
+  newStatusCreated: 'New status created successfully.',
+  statusNotFound: 'The status is not found.',
+  statusUpdated: 'Status updated successfully.',
+  statusDeleted: 'Status deleted successfully.',
+};
+
 module.exports = {
   db,
   server,
@@ -78,4 +90,5 @@ module.exports = {
   user,
   tax,
   suplr,
+  stats,
 };
