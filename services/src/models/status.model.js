@@ -1,27 +1,30 @@
 const mongoose = require('mongoose');
 
 /* Status model schema */
-const UserSchema = new mongoose.Schema(
+const StatusSchema = new mongoose.Schema(
   {
-    supId: {
+    title: {
       type: String,
       required: true,
       trim: true,
+      maxlength: 60,
     },
-    name: {
+    desc: {
       type: String,
       required: true,
-      trim: true,
+      maxlength: 255,
     },
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-      trim: true,
+    user: {
+      _id: mongoose.Schema.Types.ObjectId,
+      firstName: String,
+      lastName: String,
+      role: String,
     },
-    phone: {
-      type: String,
-      required: true,
+    lastEditedBy: {
+      _id: mongoose.Schema.Types.ObjectId,
+      firstName: String,
+      lastName: String,
+      role: String,
     },
   },
   {
@@ -29,4 +32,4 @@ const UserSchema = new mongoose.Schema(
   },
 );
 
-module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model('Status', StatusSchema);

@@ -170,7 +170,7 @@ const updateSupplier = async (req, res) => {
 };
 
 /*
- * @ API - supplier soft delete
+ * @ API - supplier soft delete / update status
  * @ method - PATCH
  * @ end point - http://localhost:4000/api/supplier/:id
  */
