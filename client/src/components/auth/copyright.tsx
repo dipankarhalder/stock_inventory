@@ -1,16 +1,11 @@
-import { useMemo } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
-export const Copyright = () => {
-  const currentYear = useMemo(() => {
-    console.log("Calculating year...");
-    return new Date().getFullYear();
-  }, []);
-
+const CopyrightComponent = () => {
   return (
     <div className="mb-[4rem] text-center">
       <p className="text-slate-500 font-medium text-sm">
-        &copy; {currentYear}{" "}
+        &copy; {new Date().getFullYear()}
         <Link
           to="https://thepixelwiz.in/"
           target="_blank"
@@ -23,3 +18,5 @@ export const Copyright = () => {
     </div>
   );
 };
+
+export const Copyright = React.memo(CopyrightComponent);
