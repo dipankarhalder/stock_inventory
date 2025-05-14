@@ -1,14 +1,20 @@
 import { useState } from "react";
+import clsx from "clsx";
 import { toast } from "sonner";
-import { signInFormBuilderSchema } from "@/lib/formBuilder";
+import { signUpFormBuilderSchema } from "@/lib/formBuilder";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9]).{8,}$/;
+const passwordRules = {
+  hasUppercase: (val: string) => /[A-Z]/.test(val),
+  hasLowercase: (val: string) => /[a-z]/.test(val),
+  hasSpecialChar: (val: string) => /[^A-Za-z0-9]/.test(val),
+  hasMinLength: (val: string) => val.length >= 8,
+};
 
 export const SignupPage = () => {
-  const initialFormState = signInFormBuilderSchema.fields.reduce(
+  const initialFormState = signUpFormBuilderSchema.fields.reduce(
     (acc, field) => {
       acc[field.name] = "";
       return acc;
@@ -21,22 +27,23 @@ export const SignupPage = () => {
 
   const validate = () => {
     const newErrors: Record<string, string> = {};
+    const { email, password } = formData;
 
-    if (!formData.email) {
+    if (!email) {
       newErrors.email = "Email is required.";
-    } else if (!emailRegex.test(formData.email)) {
-      newErrors.email = "Please enter a valid email address.";
+    } else if (!emailRegex.test(email)) {
+      newErrors.email = "Invalid email address.";
     }
-
-    if (!formData.password) {
+    if (!password) {
       newErrors.password = "Password is required.";
-    } else if (!passwordRegex.test(formData.password)) {
-      newErrors.password =
-        "Password must be at least 8 characters, include 1 uppercase, 1 lowercase, and 1 special character.";
+    } else {
+      const allValid = Object.values(passwordRules).every((fn) => fn(password));
+      if (!allValid) {
+        newErrors.password = "Password does not meet complexity requirements.";
+      }
     }
 
     setErrors(newErrors);
-
     return Object.keys(newErrors).length === 0;
   };
 
@@ -48,20 +55,20 @@ export const SignupPage = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!validate()) return;
-
     toast.success("Signed in successfully", {
       description: new Date().toLocaleString(),
     });
     console.log("Form submitted:", formData);
   };
 
+  const password = formData.password;
+
   return (
     <div className="grid gap-6">
       <form onSubmit={handleSubmit} className="grid gap-6">
         <div className="flex flex-col items-center justify-center">
-          {signInFormBuilderSchema.fields.map((field) => (
+          {signUpFormBuilderSchema.fields.map((field) => (
             <div key={field.name} className="flex flex-col gap-1">
               <Input
                 key={field.name}
@@ -72,6 +79,50 @@ export const SignupPage = () => {
                 value={formData[field.name]}
                 onChange={handleChange}
               />
+              {field.name === "password" && (
+                <div className="mt-2 text-xs space-y-1">
+                  <p
+                    className={clsx(
+                      "transition",
+                      passwordRules.hasUppercase(password)
+                        ? "text-green-600"
+                        : "text-gray-500"
+                    )}
+                  >
+                    • At least 1 uppercase letter
+                  </p>
+                  <p
+                    className={clsx(
+                      "transition",
+                      passwordRules.hasLowercase(password)
+                        ? "text-green-600"
+                        : "text-gray-500"
+                    )}
+                  >
+                    • At least 1 lowercase letter
+                  </p>
+                  <p
+                    className={clsx(
+                      "transition",
+                      passwordRules.hasSpecialChar(password)
+                        ? "text-green-600"
+                        : "text-gray-500"
+                    )}
+                  >
+                    • At least 1 special character
+                  </p>
+                  <p
+                    className={clsx(
+                      "transition",
+                      passwordRules.hasMinLength(password)
+                        ? "text-green-600"
+                        : "text-gray-500"
+                    )}
+                  >
+                    • Minimum 8 characters
+                  </p>
+                </div>
+              )}
               {errors[field.name] && (
                 <p className="text-sm text-red-500">{errors[field.name]}</p>
               )}
@@ -79,9 +130,9 @@ export const SignupPage = () => {
           ))}
           <Button
             type="submit"
-            className={signInFormBuilderSchema.submitButton.className}
+            className={signUpFormBuilderSchema.submitButton.className}
           >
-            {signInFormBuilderSchema.submitButton.label}
+            {signUpFormBuilderSchema.submitButton.label}
           </Button>
         </div>
       </form>
