@@ -4,6 +4,7 @@ import { AuthLayout } from "@/layouts/AuthLayout";
 import { ErrorPage } from "@/pages/ErrorPage";
 
 import { SigninPage } from "@/pages/auth/SigninPage";
+import { SignupPage } from "@/pages/auth/SignupPage";
 
 export const router = createBrowserRouter([
   {
@@ -14,6 +15,10 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <SigninPage />,
+      },
+      {
+        path: "/reg",
+        element: <SignupPage />,
       },
     ],
   },

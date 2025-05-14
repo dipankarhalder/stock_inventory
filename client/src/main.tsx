@@ -4,7 +4,7 @@ import { createRoot } from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
 
 import { router } from "./routers";
-import { Toaster } from "@/components/ui/sonner";
+import { Toaster } from "@/components/ui/Sonner";
 
 const rootapp = document.getElementById("root");
 createRoot(rootapp!).render(

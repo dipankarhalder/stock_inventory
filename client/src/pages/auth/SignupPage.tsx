@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import { toast } from "sonner";
 import { signInFormBuilderSchema } from "@/lib/formBuilder";
@@ -9,7 +7,7 @@ import { Button } from "@/components/ui/Button";
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9]).{8,}$/;
 
-export const SigninPage = () => {
+export const SignupPage = () => {
   const initialFormState = signInFormBuilderSchema.fields.reduce(
     (acc, field) => {
       acc[field.name] = "";
