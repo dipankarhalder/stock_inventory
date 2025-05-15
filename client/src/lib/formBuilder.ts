@@ -60,7 +60,7 @@ export const signUpFormBuilderSchema = {
     },
   ],
   submitButton: {
-    label: "Sign In",
+    label: "Registration",
     className: "theme-btn w-full",
   },
 };

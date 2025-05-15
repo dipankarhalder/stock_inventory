@@ -6,7 +6,7 @@ export const AuthLayout = () => {
   return (
     <section className="h-screen w-full flex flex-col items-center justify-between">
       <div className="relative">
-        <div className="mx-auto flex w-full flex-col justify-center items-center space-y-5 sm:w-[460px] py-12 px-8 bg-white shadow-2xl rounded-[8px] mt-[6rem]">
+        <div className="mx-auto flex w-full flex-col justify-center items-center space-y-5 sm:w-[460px] py-12 px-16 bg-white shadow-2xl rounded-[8px] mt-[6rem]">
           <div className="mb-12">
             <Logo />
           </div>
@@ -18,7 +18,9 @@ export const AuthLayout = () => {
           <Outlet />
         </div>
       </div>
-      <Copyright />
+      <div className="mb-[4rem] text-center">
+        <Copyright />
+      </div>
     </section>
   );
 };
