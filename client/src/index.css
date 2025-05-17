@@ -159,3 +159,7 @@ body {
 .theme-bg {
   background: #1a2c95;
 }
+.theme-gradient-bg {
+  background: #00aaed;
+  background: linear-gradient(133deg, rgba(0, 170, 237, 1) 0%, rgba(31, 135, 255, 1) 50%, rgba(0, 61, 153, 1) 100%);
+}
