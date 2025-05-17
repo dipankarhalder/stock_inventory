@@ -101,7 +101,7 @@ export const SignupForm = () => {
 
   return (
     <form onSubmit={handleSubmit} className="grid gap-6 w-full" noValidate>
-      <div className="flex flex-col items-center justify-center w-full gap-2">
+      <div className="flex flex-col items-center justify-center w-full gap-3">
         {signUpFormBuilderSchema.fields.map((field) => (
           <div key={field.name} className="flex flex-col w-full">
             <Label className="mb-1 text-xs text-slate-500">{field.label}</Label>
