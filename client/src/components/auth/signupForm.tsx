@@ -5,10 +5,10 @@ import { toast } from "sonner";
 import { signUpFormBuilderSchema } from "@/lib/formBuilder";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 
 const passwordRules = {
   hasMinLength: (val: string) => val.length >= 8,
-  hasMaxLength: (val: string) => val.length <= 20,
   hasUppercase: (val: string) =>
     val
       .split("")
@@ -33,7 +33,7 @@ const validateEmail = (email: string) => {
 };
 
 const validateName = (name: string) => {
-  return name.length >= 2 && !/[^a-zA-Z ]/.test(name); // Allows alphabets and spaces
+  return name.length >= 2 && !/[^a-zA-Z ]/.test(name);
 };
 
 export const SignupForm = () => {
@@ -58,20 +58,17 @@ export const SignupForm = () => {
       newErrors.firstName =
         "First name must be at least 2 characters and contain only letters and spaces.";
     }
-
     if (!lastName) {
       newErrors.lastName = "Last name is required.";
     } else if (!validateName(lastName)) {
       newErrors.lastName =
         "Last name must be at least 2 characters and contain only letters and spaces.";
     }
-
     if (!email) {
       newErrors.email = "Email is required.";
     } else if (!validateEmail(email)) {
       newErrors.email = "Invalid email address.";
     }
-
     if (!password) {
       newErrors.password = "Password is required.";
     } else {
@@ -104,19 +101,19 @@ export const SignupForm = () => {
 
   return (
     <form onSubmit={handleSubmit} className="grid gap-6 w-full" noValidate>
-      <div className="flex flex-col items-center justify-center w-full gap-4">
+      <div className="flex flex-col items-center justify-center w-full gap-2">
         {signUpFormBuilderSchema.fields.map((field) => (
           <div key={field.name} className="flex flex-col w-full">
+            <Label className="mb-1 text-xs text-slate-500">{field.label}</Label>
             <Input
               name={field.name}
               type={field.type}
-              placeholder={field.placeholder}
               required={field.required}
               value={formData[field.name]}
               onChange={handleChange}
             />
             {field.name === "password" && (
-              <div className="my-2 text-xs space-y-[2px] pl-4">
+              <div className="my-2 text-xs space-y-[2px]">
                 {Object.entries(passwordRules).map(([key, ruleFn]) => (
                   <p
                     key={key}
@@ -159,8 +156,6 @@ const getPasswordRuleText = (ruleKey: string) => {
       return "• At least 1 number";
     case "hasMinLength":
       return "• Minimum 8 characters";
-    case "hasMaxLength":
-      return "• Maximum 20 characters";
     default:
       return "";
   }
