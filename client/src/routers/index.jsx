@@ -1,13 +1,18 @@
 import { createBrowserRouter } from "react-router-dom";
-import { paths } from "@/constant";
+// import { paths } from "@/constant";
+
 import { AuthLayout } from "@/layouts/AuthLayout";
-import { ErrorPage } from "@/pages/ErrorPage";
+import { AdminLayout } from "@/layouts/AdminLayout";
+
+import { ErrorPage } from "@/pages/common/ErrorPage";
 import { SigninPage } from "@/pages/auth/SigninPage";
 import { SignupPage } from "@/pages/auth/SignupPage";
 
+import { AdminDashboardPage } from "@/pages/admin/DashboardPage";
+
 export const router = createBrowserRouter([
   {
-    path: paths.login,
+    path: "",
     element: <AuthLayout />,
     errorElement: <ErrorPage />,
     children: [
@@ -16,8 +21,17 @@ export const router = createBrowserRouter([
         element: <SigninPage />,
       },
       {
-        path: paths.register,
+        path: "/reg",
         element: <SignupPage />,
+      },
+    ],
+  },
+  {
+    element: <AdminLayout />,
+    children: [
+      {
+        path: "/admin",
+        element: <AdminDashboardPage />,
       },
     ],
   },
