@@ -4,3 +4,9 @@ export const toastStatus = {
   INFO: "info",
   ERRRO: "error",
 };
+
+export const btnStatus = {
+  ACTIVE: "active",
+  DISABLED: "disabled",
+  LOADING: "loading",
+};
