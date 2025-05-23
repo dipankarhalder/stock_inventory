@@ -45,14 +45,56 @@
   .app_toast_cover {
     max-width: 460px;
     background: $white;
-    padding: 16px 50px 16px 20px;
+    padding: 18px 50px 20px 24px;
     border-radius: 10px;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
 
     .app_toast_content {
       display: flex;
       flex-direction: column;
-      grid: 6px;
+      gap: 8px;
+
+      h5 {
+        font-size: 17px;
+      }
+      p {
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 20px;
+        color: $themedgray;
+      }
+    }
+
+    &.success {
+      background: $successbg;
+
+      h5 {
+        color: $success;
+      }
+    }
+
+    &.info {
+      background: $infobg;
+
+      h5 {
+        color: $info;
+      }
+    }
+
+    &.error {
+      background: $errorbg;
+
+      h5 {
+        color: $error;
+      }
+    }
+
+    &.warning {
+      background: $warningbg;
+
+      h5 {
+        color: $warning;
+      }
     }
 
     button {
@@ -67,9 +109,14 @@
       justify-content: center;
       align-items: center;
 
-      & > svg {
+      & > span {
         width: 20px;
         height: 20px;
+
+        & > svg {
+          width: 20px;
+          height: 20px;
+        }
       }
     }
   }
