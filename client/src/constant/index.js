@@ -10,3 +10,9 @@ export const btnStatus = {
   DISABLED: "disabled",
   LOADING: "loading",
 };
+
+export const inputStatus = {
+  ACTIVE: "active",
+  DISABLED: "disabled",
+  LOADING: "loading",
+};
