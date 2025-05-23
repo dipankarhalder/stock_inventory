@@ -1,42 +1,85 @@
-import { useContext, useState } from "react";
-import { ArrowRight } from "../../icons";
-import { Bottom } from "../../shared/button/Bottom";
+import { useReducer } from "react";
+import { Botton } from "../../shared/button/Botton";
 import { Input } from "../../shared/input/Input";
-import { toastStatus, btnStatus } from ".././../constant";
-import { ToastContext } from "../../shared/toast/context/ToastContext";
+
+// action types
+const actionTypes = {
+  SETEMAIL: "SETEMAIL",
+  SETPASSWORD: "SETPASSWORD",
+  RESET: "RESET",
+};
+
+// initial states
+const initialState = {
+  email: "",
+  password: "",
+};
+
+// reducer
+const formReducer = (state, action) => {
+  switch (action.type) {
+    case actionTypes.SETEMAIL:
+      return { ...state, email: action.payload };
+    case actionTypes.SETPASSWORD:
+      return { ...state, password: action.payload };
+    case actionTypes.RESET:
+      return { email: "", password: "" };
+    default:
+      return state;
+  }
+};
 
 export const SigninPage = () => {
-  const [status, setStatus] = useState("");
-  const [name, setName] = useState("");
+  const [state, dispatch] = useReducer(formReducer, initialState);
 
-  const { addToast } = useContext(ToastContext);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Form submitted:", state);
 
-  const handleClick = () => {
-    setStatus(btnStatus.LOADING);
-    setTimeout(() => setStatus(btnStatus.ACTIVE), 2000);
-  };
-
-  const toastMsg = {
-    type: toastStatus.SUCCESS,
-    title: "Toast form sign-in page",
-    description:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
+    // TODO: Call your authentication logic here (API request, etc.)
+    dispatch({ type: actionTypes.RESET });
   };
 
   return (
-    <div>
-      <h1>Home Page</h1>
-      <Input
-        type="text"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        placeholder="Hello Text"
-      />
-      <p>{name}</p>
-      <Bottom status={status} onClick={handleClick}>
-        <ArrowRight /> Submit
-      </Bottom>
-      <span onClick={() => addToast(toastMsg, 3000)}>click me</span>
+    <div className="app_auth_form">
+      <h1>Welcome Back!</h1>
+      <p>
+        Sign in to access your dashboard, <br />
+        settings and projects
+      </p>
+      <div className="app_form_auth">
+        <form onSubmit={handleSubmit}>
+          <div>
+            <Input
+              type="email"
+              value={state.email}
+              placeholder="Email"
+              onChange={(e) =>
+                dispatch({
+                  type: actionTypes.SETEMAIL,
+                  payload: e.target.value,
+                })
+              }
+            />
+          </div>
+          <div>
+            <Input
+              type="password"
+              value={state.password}
+              placeholder="Password"
+              onChange={(e) =>
+                dispatch({
+                  type: actionTypes.SETPASSWORD,
+                  payload: e.target.value,
+                })
+              }
+            />
+          </div>
+          <div>
+            <Botton>Login</Botton>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
