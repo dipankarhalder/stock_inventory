@@ -3,7 +3,7 @@ import { Spinner } from "../../icons";
 
 export const Bottom = ({
   children,
-  status = btnStatus.ACTIVE, // 'active' | 'disabled' | 'loading'
+  status = "",
   onClick,
   className = "",
   ...props
@@ -14,14 +14,14 @@ export const Bottom = ({
   return (
     <button
       className={`app_btn ${status} ${className}`}
-      onClick={!isDisabled ? onClick : undefined}
+      onClick={!isDisabled && onClick}
       disabled={isDisabled}
       {...props}
     >
       {status === btnStatus.LOADING ? (
-        <p>
+        <>
           Please wait... <Spinner />
-        </p>
+        </>
       ) : (
         children
       )}

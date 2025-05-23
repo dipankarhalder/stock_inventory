@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-// import { paths } from "@/constant";
+import { paths } from "./links";
 
 import { AuthLayout } from "@/layouts/AuthLayout";
 import { AdminLayout } from "@/layouts/AdminLayout";
@@ -12,7 +12,7 @@ import { AdminDashboardPage } from "@/pages/admin/DashboardPage";
 
 export const router = createBrowserRouter([
   {
-    path: "",
+    path: paths.login,
     element: <AuthLayout />,
     errorElement: <ErrorPage />,
     children: [
@@ -21,7 +21,7 @@ export const router = createBrowserRouter([
         element: <SigninPage />,
       },
       {
-        path: "/reg",
+        path: paths.register,
         element: <SignupPage />,
       },
     ],
@@ -30,7 +30,7 @@ export const router = createBrowserRouter([
     element: <AdminLayout />,
     children: [
       {
-        path: "/admin",
+        path: paths.adminDashboard,
         element: <AdminDashboardPage />,
       },
     ],
