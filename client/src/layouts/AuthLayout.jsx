@@ -1,9 +1,6 @@
-import { Outlet, Link } from "react-router-dom";
-// import { paths } from "@/constant";
+import { Outlet } from "react-router-dom";
 import { MainLogo } from "../components/auth/Logo";
-// import { AuthHeading } from "@/components/auth/authHeading";
-// import { AuthLinks } from "@/components/auth/authLinks";
-// import { Copyright } from "@/components/common/copyright";
+import { Copyright } from "../components/auth/Copyright";
 
 export const AuthLayout = () => {
   return (
@@ -13,15 +10,7 @@ export const AuthLayout = () => {
           <MainLogo />
           <Outlet />
         </div>
-        <div className="app_content_footer">
-          <p>
-            &copy; {new Date().getFullYear()}
-            <Link to="https://thepixelwiz.in/" target="_blank">
-              Pixelwiz Private Limited.
-            </Link>
-            All Rights Reserved.
-          </p>
-        </div>
+        <Copyright />
       </div>
     </section>
   );

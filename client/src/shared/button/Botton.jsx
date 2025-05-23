@@ -1,7 +1,7 @@
 import { btnStatus } from "../../constant";
 import { Spinner } from "../../icons";
 
-export const Bottom = ({
+export const Botton = ({
   children,
   status = "",
   onClick,
