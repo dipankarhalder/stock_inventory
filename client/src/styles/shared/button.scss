@@ -14,24 +14,32 @@
   font-size: 15px;
   border-radius: 40px;
   border: 0px solid $transparent;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+
+  & > span {
+    width: 20px;
+    height: 20px;
+
+    & > svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  &.active {
+    background: $themeblue;
+    color: $white;
+  }
 
   &.loading {
     background: $themegray;
     cursor: not-allowed;
 
-    & > p {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-
-      & > span {
-        width: 20px;
-        height: 20px;
-
-        & > svg {
-          animation: spin 2s linear infinite;
-        }
-      }
+    & > span > svg {
+      animation: spin 2s linear infinite;
     }
   }
 

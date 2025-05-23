@@ -1,11 +1,15 @@
 import { useContext, useState } from "react";
+import { ArrowRight } from "../../icons";
 import { Bottom } from "../../shared/button/Bottom";
+import { Input } from "../../shared/input/Input";
 import { toastStatus, btnStatus } from ".././../constant";
 import { ToastContext } from "../../shared/toast/context/ToastContext";
 
 export const SigninPage = () => {
+  const [status, setStatus] = useState("");
+  const [name, setName] = useState("");
+
   const { addToast } = useContext(ToastContext);
-  const [status, setStatus] = useState(btnStatus.ACTIVE);
 
   const handleClick = () => {
     setStatus(btnStatus.LOADING);
@@ -22,8 +26,15 @@ export const SigninPage = () => {
   return (
     <div>
       <h1>Home Page</h1>
+      <Input
+        type="text"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        placeholder="Hello Text"
+      />
+      <p>{name}</p>
       <Bottom status={status} onClick={handleClick}>
-        Submit
+        <ArrowRight /> Submit
       </Bottom>
       <span onClick={() => addToast(toastMsg, 3000)}>click me</span>
     </div>

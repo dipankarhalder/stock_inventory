@@ -1,0 +1,52 @@
+.app_main_cover {
+  display: flex;
+  width: 100%;
+  height: 100dvh;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .app_content {
+    width: 360px;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+
+    .app_content_form {
+      width: 100%;
+      height: 90dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      .app_main_logo {
+        width: 210px;
+        margin-bottom: 20px;
+
+        & > svg {
+          width: 100%;
+        }
+      }
+    }
+
+    .app_content_footer {
+      width: 100%;
+
+      p {
+        font-size: 14px;
+        width: 100%;
+        text-align: center;
+
+        a {
+          font-size: 14px;
+          color: $themeblue;
+          margin: 0px 6px;
+        }
+      }
+    }
+  }
+}
