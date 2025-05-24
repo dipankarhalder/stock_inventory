@@ -26,6 +26,21 @@ const formReducer = (state, action) => {
 export const CreatePassword = () => {
   const [state, dispatch] = useReducer(formReducer, initialState);
 
+  const formFields = [
+    {
+      type: "password",
+      value: state.newpassword,
+      placeholder: "New password",
+      dispatchType: types.SETNEWPASSWORD,
+    },
+    {
+      type: "password",
+      value: state.repeatpassword,
+      placeholder: "Repeat Password",
+      dispatchType: types.SETREPEATPASSWORD,
+    },
+  ];
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form submitted:", state);
@@ -44,32 +59,9 @@ export const CreatePassword = () => {
       </p>
       <div className="app_form_auth">
         <form onSubmit={handleSubmit}>
-          <div>
-            <Input
-              type="password"
-              value={state.newpassword}
-              placeholder="New Password"
-              onChange={(e) =>
-                dispatch({
-                  type: types.SETNEWPASSWORD,
-                  payload: e.target.value,
-                })
-              }
-            />
-          </div>
-          <div>
-            <Input
-              type="password"
-              value={state.repeatpassword}
-              placeholder="Repeat New Password"
-              onChange={(e) =>
-                dispatch({
-                  type: types.SETREPEATPASSWORD,
-                  payload: e.target.value,
-                })
-              }
-            />
-          </div>
+          {formFields.map((field, index) => (
+            <FormInput key={index} {...field} dispatch={dispatch} />
+          ))}
           <div>
             <Botton>Submit</Botton>
           </div>

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { paths } from "../../routers/links";
 import { types } from "../../constant/types";
 import { Botton } from "../../shared/button/Botton";
-import { Input } from "../../shared/input/Input";
+import { FormInput } from "../../components/auth/FormInput";
 
 // initial states
 const initialState = {
@@ -25,6 +25,15 @@ const formReducer = (state, action) => {
 export const ForgotPassPage = () => {
   const [state, dispatch] = useReducer(formReducer, initialState);
 
+  const formFields = [
+    {
+      type: "email",
+      value: state.email,
+      placeholder: "Email address",
+      dispatchType: types.SETEMAIL,
+    },
+  ];
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form submitted:", state);
@@ -42,19 +51,9 @@ export const ForgotPassPage = () => {
       </p>
       <div className="app_form_auth">
         <form onSubmit={handleSubmit}>
-          <div>
-            <Input
-              type="email"
-              value={state.email}
-              placeholder="Email Address"
-              onChange={(e) =>
-                dispatch({
-                  type: types.SETEMAIL,
-                  payload: e.target.value,
-                })
-              }
-            />
-          </div>
+          {formFields.map((field, index) => (
+            <FormInput key={index} {...field} dispatch={dispatch} />
+          ))}
           <div>
             <Botton>Submit</Botton>
           </div>

@@ -84,6 +84,40 @@
                 }
               }
             }
+
+            .app_wrap_field {
+              width: 100%;
+              display: flex;
+              flex-direction: column;
+
+              & > p {
+                font-size: 13px;
+                font-weight: 500;
+                margin-top: 4px;
+                color: $themeerror;
+              }
+
+              .app_pass_rules {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                margin-bottom: 16px;
+                margin-top: 10px;
+
+                & > p {
+                  width: 50%;
+                  font-size: 13px;
+                  font-weight: 500;
+                }
+
+                .app_valid_green {
+                  color: lighten($success, 6%);
+                }
+                .app_valid_gray {
+                  color: $themegray;
+                }
+              }
+            }
           }
           .app_links {
             display: flex;
