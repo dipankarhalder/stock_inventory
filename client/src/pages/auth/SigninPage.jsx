@@ -1,9 +1,10 @@
-import { useReducer } from "react";
+import { useReducer, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { paths } from "../../routers/links";
 import { types } from "../../constant/types";
 import { Botton } from "../../shared/button/Botton";
 import { Input } from "../../shared/input/Input";
+import { validateLoginForm } from "../../utils/validationUtils";
 
 // initial states
 const initialState = {
@@ -27,17 +28,42 @@ const formReducer = (state, action) => {
 
 export const SigninPage = () => {
   const navigate = useNavigate();
+  const [errors, setErrors] = useState({});
   const [state, dispatch] = useReducer(formReducer, initialState);
+
+  const formFields = [
+    {
+      name: "email",
+      type: "email",
+      value: state.email,
+      placeholder: "Email address",
+      dispatchType: types.SETEMAIL,
+    },
+    {
+      name: "password",
+      type: "password",
+      value: state.password,
+      placeholder: "Password",
+      dispatchType: types.SETPASSWORD,
+    },
+  ];
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const newErrors = validateLoginForm(state);
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
     console.log("Form submitted:", state);
 
     if (state.email === "dipankar@gmail.com" && state.password === "Dip@1234") {
-      navigate(paths.adminDashboard);
+      navigate("/");
     }
 
     dispatch({ type: types.RESET });
+    setErrors({});
   };
 
   return (
@@ -49,32 +75,18 @@ export const SigninPage = () => {
       </p>
       <div className="app_form_auth">
         <form onSubmit={handleSubmit}>
-          <div>
-            <Input
-              type="email"
-              value={state.email}
-              placeholder="Email Address"
-              onChange={(e) =>
-                dispatch({
-                  type: types.SETEMAIL,
-                  payload: e.target.value,
-                })
-              }
-            />
-          </div>
-          <div>
-            <Input
-              type="password"
-              value={state.password}
-              placeholder="Password"
-              onChange={(e) =>
-                dispatch({
-                  type: types.SETPASSWORD,
-                  payload: e.target.value,
-                })
-              }
-            />
-          </div>
+          {formFields.map((field, index) => (
+            <div className="app_wrap_field" key={index}>
+              <Input
+                {...field}
+                dispatch={dispatch}
+                error={errors[field.name]}
+              />
+              {errors[field.name] && (
+                <p className="app_field_err">{errors[field.name]}</p>
+              )}
+            </div>
+          ))}
           <div className="app_links_inside">
             <p>
               <Link
