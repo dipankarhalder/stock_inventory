@@ -1,15 +1,9 @@
 import { useReducer } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { paths } from "../../routers/links";
+import { types } from "../../constant/types";
 import { Botton } from "../../shared/button/Botton";
 import { Input } from "../../shared/input/Input";
-
-// action types
-const actionTypes = {
-  SETEMAIL: "SETEMAIL",
-  SETPASSWORD: "SETPASSWORD",
-  RESET: "RESET",
-};
 
 // initial states
 const initialState = {
@@ -20,11 +14,11 @@ const initialState = {
 // reducer
 const formReducer = (state, action) => {
   switch (action.type) {
-    case actionTypes.SETEMAIL:
+    case types.SETEMAIL:
       return { ...state, email: action.payload };
-    case actionTypes.SETPASSWORD:
+    case types.SETPASSWORD:
       return { ...state, password: action.payload };
-    case actionTypes.RESET:
+    case types.RESET:
       return { email: "", password: "" };
     default:
       return state;
@@ -32,14 +26,18 @@ const formReducer = (state, action) => {
 };
 
 export const SigninPage = () => {
+  const navigate = useNavigate();
   const [state, dispatch] = useReducer(formReducer, initialState);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form submitted:", state);
 
-    // TODO: Call your authentication logic here (API request, etc.)
-    dispatch({ type: actionTypes.RESET });
+    if (state.email === "dipankar@gmail.com" && state.password === "Dip@1234") {
+      navigate(paths.adminDashboard);
+    }
+
+    dispatch({ type: types.RESET });
   };
 
   return (
@@ -58,7 +56,7 @@ export const SigninPage = () => {
               placeholder="Email Address"
               onChange={(e) =>
                 dispatch({
-                  type: actionTypes.SETEMAIL,
+                  type: types.SETEMAIL,
                   payload: e.target.value,
                 })
               }
@@ -71,7 +69,7 @@ export const SigninPage = () => {
               placeholder="Password"
               onChange={(e) =>
                 dispatch({
-                  type: actionTypes.SETPASSWORD,
+                  type: types.SETPASSWORD,
                   payload: e.target.value,
                 })
               }
@@ -79,12 +77,11 @@ export const SigninPage = () => {
           </div>
           <div className="app_links_inside">
             <p>
-              Are you &nbsp;
               <Link
                 to={paths.forgot}
                 className="font-medium underline hover:text-indigo-700"
               >
-                forgot password?
+                Forgot password?
               </Link>
             </p>
           </div>
