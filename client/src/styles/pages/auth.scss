@@ -43,7 +43,7 @@
           margin-bottom: 6px;
         }
 
-        p {
+        & > p {
           color: $themegray;
           width: 100%;
           text-align: center;
@@ -62,6 +62,46 @@
             & > div {
               display: flex;
               justify-content: center;
+
+              &.app_links_inside {
+                display: flex;
+                justify-content: center;
+                margin-top: 0px;
+                margin-bottom: 10px;
+
+                & > p {
+                  color: $themegray;
+                  font-size: 14px;
+                  font-weight: 500;
+
+                  & > a {
+                    color: $themeblue;
+
+                    &:hover {
+                      text-decoration: underline;
+                    }
+                  }
+                }
+              }
+            }
+          }
+          .app_links {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+
+            & > p {
+              color: $themegray;
+              font-size: 14px;
+              font-weight: 500;
+
+              & > a {
+                color: $themeblue;
+
+                &:hover {
+                  text-decoration: underline;
+                }
+              }
             }
           }
         }

@@ -7,7 +7,7 @@
 .app_btn {
   height: 40px;
   width: auto;
-  padding: 0 24px;
+  padding: 0 30px;
   background: $themeblue;
   color: $white;
   font-weight: 500;
@@ -18,6 +18,12 @@
   align-items: center;
   gap: 10px;
   cursor: pointer;
+  transition: 0.5s;
+
+  &:hover {
+    background: $themehblue;
+    transition: 0.5s;
+  }
 
   & > span {
     width: 20px;
