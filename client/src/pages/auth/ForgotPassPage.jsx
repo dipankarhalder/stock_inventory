@@ -1,14 +1,9 @@
 import { useReducer } from "react";
 import { Link } from "react-router-dom";
 import { paths } from "../../routers/links";
+import { types } from "../../constant/types";
 import { Botton } from "../../shared/button/Botton";
 import { Input } from "../../shared/input/Input";
-
-// action types
-const actionTypes = {
-  SETEMAIL: "SETEMAIL",
-  RESET: "RESET",
-};
 
 // initial states
 const initialState = {
@@ -18,9 +13,9 @@ const initialState = {
 // reducer
 const formReducer = (state, action) => {
   switch (action.type) {
-    case actionTypes.SETEMAIL:
+    case types.SETEMAIL:
       return { ...state, email: action.payload };
-    case actionTypes.RESET:
+    case types.RESET:
       return { email: "" };
     default:
       return state;
@@ -35,7 +30,7 @@ export const ForgotPassPage = () => {
     console.log("Form submitted:", state);
 
     // TODO: Call your authentication logic here (API request, etc.)
-    dispatch({ type: actionTypes.RESET });
+    dispatch({ type: types.RESET });
   };
 
   return (
@@ -54,7 +49,7 @@ export const ForgotPassPage = () => {
               placeholder="Email Address"
               onChange={(e) =>
                 dispatch({
-                  type: actionTypes.SETEMAIL,
+                  type: types.SETEMAIL,
                   payload: e.target.value,
                 })
               }
