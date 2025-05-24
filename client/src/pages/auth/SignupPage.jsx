@@ -1,17 +1,9 @@
 import { useReducer } from "react";
 import { Link } from "react-router-dom";
 import { paths } from "../../routers/links";
+import { types } from "../../constant/types";
 import { Botton } from "../../shared/button/Botton";
 import { Input } from "../../shared/input/Input";
-
-// action types
-const actionTypes = {
-  SETFIRSTNAME: "SETFIRSTNAME",
-  SETLASTNAME: "SETLASTNAME",
-  SETEMAIL: "SETEMAIL",
-  SETPASSWORD: "SETPASSWORD",
-  RESET: "RESET",
-};
 
 // initial states
 const initialState = {
@@ -24,15 +16,15 @@ const initialState = {
 // reducer
 const formReducer = (state, action) => {
   switch (action.type) {
-    case actionTypes.SETFIRSTNAME:
+    case types.SETFIRSTNAME:
       return { ...state, firstName: action.payload };
-    case actionTypes.SETLASTNAME:
+    case types.SETLASTNAME:
       return { ...state, lastName: action.payload };
-    case actionTypes.SETEMAIL:
+    case types.SETEMAIL:
       return { ...state, email: action.payload };
-    case actionTypes.SETPASSWORD:
+    case types.SETPASSWORD:
       return { ...state, password: action.payload };
-    case actionTypes.RESET:
+    case types.RESET:
       return { firstName: "", lastName: "", email: "", password: "" };
     default:
       return state;
@@ -47,7 +39,7 @@ export const SignupPage = () => {
     console.log("Form submitted:", state);
 
     // TODO: Call your authentication logic here (API request, etc.)
-    dispatch({ type: actionTypes.RESET });
+    dispatch({ type: types.RESET });
   };
 
   return (
@@ -65,7 +57,7 @@ export const SignupPage = () => {
               placeholder="First name"
               onChange={(e) =>
                 dispatch({
-                  type: actionTypes.SETFIRSTNAME,
+                  type: types.SETFIRSTNAME,
                   payload: e.target.value,
                 })
               }
@@ -78,7 +70,7 @@ export const SignupPage = () => {
               placeholder="Last name"
               onChange={(e) =>
                 dispatch({
-                  type: actionTypes.SETLASTNAME,
+                  type: types.SETLASTNAME,
                   payload: e.target.value,
                 })
               }
@@ -92,7 +84,7 @@ export const SignupPage = () => {
               placeholder="Email Address"
               onChange={(e) =>
                 dispatch({
-                  type: actionTypes.SETEMAIL,
+                  type: types.SETEMAIL,
                   payload: e.target.value,
                 })
               }
@@ -105,7 +97,7 @@ export const SignupPage = () => {
               placeholder="Password"
               onChange={(e) =>
                 dispatch({
-                  type: actionTypes.SETPASSWORD,
+                  type: types.SETPASSWORD,
                   payload: e.target.value,
                 })
               }

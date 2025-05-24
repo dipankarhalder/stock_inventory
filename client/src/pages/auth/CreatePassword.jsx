@@ -1,13 +1,7 @@
 import { useReducer } from "react";
+import { types } from "../../constant/types";
 import { Botton } from "../../shared/button/Botton";
 import { Input } from "../../shared/input/Input";
-
-// action types
-const actionTypes = {
-  SETNEWPASSWORD: "SETNEWPASSWORD",
-  SETREPEATPASSWORD: "SETREPEATPASSWORD",
-  RESET: "RESET",
-};
 
 // initial states
 const initialState = {
@@ -18,11 +12,11 @@ const initialState = {
 // reducer
 const formReducer = (state, action) => {
   switch (action.type) {
-    case actionTypes.SETNEWPASSWORD:
+    case types.SETNEWPASSWORD:
       return { ...state, newpassword: action.payload };
-    case actionTypes.SETREPEATPASSWORD:
+    case types.SETREPEATPASSWORD:
       return { ...state, repeatpassword: action.payload };
-    case actionTypes.RESET:
+    case types.RESET:
       return { newpassword: "", repeatpassword: "" };
     default:
       return state;
@@ -37,7 +31,7 @@ export const CreatePassword = () => {
     console.log("Form submitted:", state);
 
     // TODO: Call your authentication logic here (API request, etc.)
-    dispatch({ type: actionTypes.RESET });
+    dispatch({ type: types.RESET });
   };
 
   return (
@@ -57,7 +51,7 @@ export const CreatePassword = () => {
               placeholder="New Password"
               onChange={(e) =>
                 dispatch({
-                  type: actionTypes.SETNEWPASSWORD,
+                  type: types.SETNEWPASSWORD,
                   payload: e.target.value,
                 })
               }
@@ -70,7 +64,7 @@ export const CreatePassword = () => {
               placeholder="Repeat New Password"
               onChange={(e) =>
                 dispatch({
-                  type: actionTypes.SETREPEATPASSWORD,
+                  type: types.SETREPEATPASSWORD,
                   payload: e.target.value,
                 })
               }
