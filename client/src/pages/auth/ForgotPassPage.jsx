@@ -6,40 +6,28 @@ import { Input } from "../../shared/input/Input";
 
 // action types
 const actionTypes = {
-  SETFIRSTNAME: "SETFIRSTNAME",
-  SETLASTNAME: "SETLASTNAME",
   SETEMAIL: "SETEMAIL",
-  SETPASSWORD: "SETPASSWORD",
   RESET: "RESET",
 };
 
 // initial states
 const initialState = {
-  firstName: "",
-  lastName: "",
   email: "",
-  password: "",
 };
 
 // reducer
 const formReducer = (state, action) => {
   switch (action.type) {
-    case actionTypes.SETFIRSTNAME:
-      return { ...state, firstName: action.payload };
-    case actionTypes.SETLASTNAME:
-      return { ...state, lastName: action.payload };
     case actionTypes.SETEMAIL:
       return { ...state, email: action.payload };
-    case actionTypes.SETPASSWORD:
-      return { ...state, password: action.payload };
     case actionTypes.RESET:
-      return { firstName: "", lastName: "", email: "", password: "" };
+      return { email: "" };
     default:
       return state;
   }
 };
 
-export const SignupPage = () => {
+export const ForgotPassPage = () => {
   const [state, dispatch] = useReducer(formReducer, initialState);
 
   const handleSubmit = (e) => {
@@ -52,39 +40,13 @@ export const SignupPage = () => {
 
   return (
     <div className="app_auth_form">
-      <h1>Create an account</h1>
+      <h1>Forgot password</h1>
       <p>
-        Let's get your profile set up in less than <br />2 minutes.
+        No worries! enter your email address below, <br />
+        and we'll send you a link to forgot your password.
       </p>
       <div className="app_form_auth">
         <form onSubmit={handleSubmit}>
-          <div>
-            <Input
-              type="text"
-              value={state.firstName}
-              placeholder="First name"
-              onChange={(e) =>
-                dispatch({
-                  type: actionTypes.SETFIRSTNAME,
-                  payload: e.target.value,
-                })
-              }
-            />
-          </div>
-          <div>
-            <Input
-              type="text"
-              value={state.lastName}
-              placeholder="Last name"
-              onChange={(e) =>
-                dispatch({
-                  type: actionTypes.SETLASTNAME,
-                  payload: e.target.value,
-                })
-              }
-            />
-          </div>
-
           <div>
             <Input
               type="email"
@@ -99,20 +61,7 @@ export const SignupPage = () => {
             />
           </div>
           <div>
-            <Input
-              type="password"
-              value={state.password}
-              placeholder="Password"
-              onChange={(e) =>
-                dispatch({
-                  type: actionTypes.SETPASSWORD,
-                  payload: e.target.value,
-                })
-              }
-            />
-          </div>
-          <div>
-            <Botton>Register</Botton>
+            <Botton>Submit</Botton>
           </div>
         </form>
         <div className="app_links">
