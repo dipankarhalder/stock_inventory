@@ -2,7 +2,7 @@ import { Fragment, useState, useReducer } from "react";
 import { Link } from "react-router-dom";
 import { paths } from "../../routers/links";
 import { types } from "../../constant/types";
-import { Botton } from "../../shared/button/Botton";
+import { Button } from "../../shared/button/Button";
 import { FormInput } from "../../components/auth/FormInput";
 import {
   passwordRules,
@@ -10,7 +10,6 @@ import {
   validateRegisterForm,
 } from "../../utils/validationUtils";
 
-// initial states
 const initialState = {
   firstName: "",
   lastName: "",
@@ -19,7 +18,6 @@ const initialState = {
   password: "",
 };
 
-// reducer
 const formReducer = (state, action) => {
   switch (action.type) {
     case types.SETFIRSTNAME:
@@ -95,7 +93,6 @@ export const SignupPage = () => {
       return;
     }
 
-    // TODO: Call your authentication logic here (API request, etc.)
     console.log("Form submitted:", state);
     dispatch({ type: types.RESET });
     setErrors({});
@@ -135,7 +132,7 @@ export const SignupPage = () => {
             </div>
           ))}
           <div>
-            <Botton>Register</Botton>
+            <Button>Register</Button>
           </div>
         </form>
         <div className="app_links">

@@ -2,15 +2,13 @@ import { useReducer } from "react";
 import { Link } from "react-router-dom";
 import { paths } from "../../routers/links";
 import { types } from "../../constant/types";
-import { Botton } from "../../shared/button/Botton";
+import { Button } from "../../shared/button/Button";
 import { FormInput } from "../../components/auth/FormInput";
 
-// initial states
 const initialState = {
   email: "",
 };
 
-// reducer
 const formReducer = (state, action) => {
   switch (action.type) {
     case types.SETEMAIL:
@@ -38,7 +36,6 @@ export const ForgotPassPage = () => {
     e.preventDefault();
     console.log("Form submitted:", state);
 
-    // TODO: Call your authentication logic here (API request, etc.)
     dispatch({ type: types.RESET });
   };
 
@@ -55,7 +52,7 @@ export const ForgotPassPage = () => {
             <FormInput key={index} {...field} dispatch={dispatch} />
           ))}
           <div>
-            <Botton>Submit</Botton>
+            <Button>Submit</Button>
           </div>
         </form>
         <div className="app_links">

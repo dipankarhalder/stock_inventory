@@ -1,15 +1,13 @@
 import { useReducer } from "react";
 import { types } from "../../constant/types";
-import { Botton } from "../../shared/button/Botton";
+import { Button } from "../../shared/button/Button";
 import { FormInput } from "../../components/auth/FormInput";
 
-// initial states
 const initialState = {
   newpassword: "",
   repeatpassword: "",
 };
 
-// reducer
 const formReducer = (state, action) => {
   switch (action.type) {
     case types.SETNEWPASSWORD:
@@ -45,7 +43,6 @@ export const CreatePassword = () => {
     e.preventDefault();
     console.log("Form submitted:", state);
 
-    // TODO: Call your authentication logic here (API request, etc.)
     dispatch({ type: types.RESET });
   };
 
@@ -63,7 +60,7 @@ export const CreatePassword = () => {
             <FormInput key={index} {...field} dispatch={dispatch} />
           ))}
           <div>
-            <Botton>Submit</Botton>
+            <Button>Submit</Button>
           </div>
         </form>
       </div>

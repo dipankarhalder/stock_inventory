@@ -2,17 +2,15 @@ import { useReducer, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { paths } from "../../routers/links";
 import { types } from "../../constant/types";
-import { Botton } from "../../shared/button/Botton";
+import { Button } from "../../shared/button/Button";
 import { FormInput } from "../../components/auth/FormInput";
 import { validateLoginForm } from "../../utils/validationUtils";
 
-// initial states
 const initialState = {
   email: "",
   password: "",
 };
 
-// reducer
 const formReducer = (state, action) => {
   switch (action.type) {
     case types.SETEMAIL:
@@ -55,7 +53,6 @@ export const SigninPage = () => {
       setErrors(newErrors);
       return;
     }
-
     if (state.email === "dipankar@gmail.com" && state.password === "Dip@1234") {
       navigate(paths.adminDashboard);
     }
@@ -96,7 +93,7 @@ export const SigninPage = () => {
             </p>
           </div>
           <div>
-            <Botton>Login</Botton>
+            <Button>Login</Button>
           </div>
         </form>
         <div className="app_links">
