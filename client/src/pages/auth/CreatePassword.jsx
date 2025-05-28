@@ -1,7 +1,7 @@
 import { useReducer } from "react";
 import { types } from "../../constant/types";
 import { Botton } from "../../shared/button/Botton";
-import { Input } from "../../shared/input/Input";
+import { FormInput } from "../../components/auth/FormInput";
 
 // initial states
 const initialState = {
