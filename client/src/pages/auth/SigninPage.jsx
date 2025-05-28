@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { paths } from "../../routers/links";
 import { types } from "../../constant/types";
 import { Botton } from "../../shared/button/Botton";
-import { Input } from "../../shared/input/Input";
+import { FormInput } from "../../components/auth/FormInput";
 import { validateLoginForm } from "../../utils/validationUtils";
 
 // initial states
@@ -56,10 +56,8 @@ export const SigninPage = () => {
       return;
     }
 
-    console.log("Form submitted:", state);
-
     if (state.email === "dipankar@gmail.com" && state.password === "Dip@1234") {
-      navigate("/");
+      navigate(paths.adminDashboard);
     }
 
     dispatch({ type: types.RESET });
@@ -77,7 +75,7 @@ export const SigninPage = () => {
         <form onSubmit={handleSubmit}>
           {formFields.map((field, index) => (
             <div className="app_wrap_field" key={index}>
-              <Input
+              <FormInput
                 {...field}
                 dispatch={dispatch}
                 error={errors[field.name]}
