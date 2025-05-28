@@ -22,7 +22,7 @@ export const Sidebar = () => {
               <ul>
                 {item.children.map((itm) => (
                   <li key={itm.id}>
-                    <Link to="/">
+                    <Link to={itm.path}>
                       {itm.icon && <itm.icon />} <p>{itm.label}</p>
                     </Link>
                   </li>
