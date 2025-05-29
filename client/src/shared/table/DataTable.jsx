@@ -1,14 +1,10 @@
 import { useReducer, useEffect, useState, useMemo } from "react";
 import { types } from "../../constant/types";
-
-const useDebounce = (value, delay = 300) => {
-  const [debounced, setDebounced] = useState(value);
-  useEffect(() => {
-    const handler = setTimeout(() => setDebounced(value), delay);
-    return () => clearTimeout(handler);
-  }, [value, delay]);
-  return debounced;
-};
+import { useDebounce } from "../../hooks/useDebounce";
+import { SearchBar } from "./components/SearchBar";
+import { TableHeader } from "./components/TableHeader";
+import { TableRow } from "./components/TableRow";
+import { Pagination } from "./components/Pagination";
 
 const initialState = {
   currentPage: 1,
@@ -61,12 +57,8 @@ export const DataTable = ({
   }, [debouncedSearch, data]);
 
   const totalPages = Math.ceil(filteredData.length / pageSize);
-  const getCurrentPageData = () => {
-    const start = (currentPage - 1) * pageSize;
-    return filteredData.slice(start, start + pageSize);
-  };
-
-  const currentPageData = getCurrentPageData();
+  const start = (currentPage - 1) * pageSize;
+  const currentPageData = filteredData.slice(start, start + pageSize);
 
   const isRowSelected = (row) =>
     selectedRows.some((r) => JSON.stringify(r) === JSON.stringify(row));
@@ -99,22 +91,6 @@ export const DataTable = ({
     }
   };
 
-  const generatePageNumbers = () => {
-    const pages = [];
-    for (let i = 1; i <= Math.min(3, totalPages); i++) pages.push(i);
-
-    if (currentPage > 5) pages.push("...");
-    const start = Math.max(4, currentPage - 1);
-    const end = Math.min(totalPages - 3, currentPage + 1);
-    for (let i = start; i <= end; i++) pages.push(i);
-
-    if (currentPage < totalPages - 4) pages.push("...");
-    for (let i = Math.max(totalPages - 2, 4); i <= totalPages; i++) {
-      if (!pages.includes(i)) pages.push(i);
-    }
-    return pages;
-  };
-
   const handleAction = (actionType, rowData) => {
     if (onAction && typeof onAction === "function") {
       onAction(actionType, rowData);
@@ -122,49 +98,36 @@ export const DataTable = ({
   };
 
   const handleDeleteSelected = () => {
-    if (onAction) {
-      onAction("deleteSelected", selectedRows);
-    }
-    setSelectedRows([]); // Optional: reset after delete
+    onAction?.("deleteSelected", selectedRows);
+    setSelectedRows([]);
   };
 
   const handleExportCSV = () => {
-    const headers = Object.keys(selectedRows[0] || {});
+    const csvHeaders = Object.keys(selectedRows[0] || {});
     const csvRows = [
-      headers.join(","), // header row
+      csvHeaders.join(","),
       ...selectedRows.map((row) =>
-        headers.map((field) => `"${row[field] ?? ""}"`).join(",")
+        csvHeaders.map((field) => `"${row[field] ?? ""}"`).join(",")
       ),
     ];
     const blob = new Blob([csvRows.join("\n")], { type: "text/csv" });
-    const url = window.URL.createObjectURL(blob);
+    const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
     a.download = "export.csv";
     a.click();
-    window.URL.revokeObjectURL(url);
+    URL.revokeObjectURL(url);
   };
 
   return (
     <div style={{ overflowX: "auto" }}>
-      <div style={{ marginBottom: "12px", textAlign: "right" }}>
-        <input
-          type="text"
-          placeholder="Search..."
-          value={searchQuery}
-          onChange={(e) =>
-            dispatch({ type: types.SETSEARCH, query: e.target.value })
-          }
-          style={{ padding: "6px 10px", width: "200px" }}
-        />
-
-        {selectedRows.length > 0 && (
-          <div style={{ display: "flex", gap: "10px" }}>
-            <button onClick={handleDeleteSelected}>Delete Selected</button>
-            <button onClick={handleExportCSV}>Export CSV</button>
-          </div>
-        )}
-      </div>
+      <SearchBar
+        searchQuery={searchQuery}
+        dispatch={dispatch}
+        selectedRows={selectedRows}
+        onDelete={handleDeleteSelected}
+        onExport={handleExportCSV}
+      />
 
       <table
         border="1"
@@ -173,47 +136,22 @@ export const DataTable = ({
         style={{ borderCollapse: "collapse", width: "100%" }}
       >
         <thead>
-          <tr>
-            <th>
-              <input
-                type="checkbox"
-                checked={isAllPageSelected}
-                onChange={toggleSelectAllCurrentPage}
-              />
-            </th>
-            {headers.map((header) => (
-              <th key={header} style={{ textTransform: "capitalize" }}>
-                {header.replace(/_/g, " ")}
-              </th>
-            ))}
-            <th>Action</th>
-          </tr>
+          <TableHeader
+            headers={headers}
+            isAllSelected={isAllPageSelected}
+            onSelectAll={toggleSelectAllCurrentPage}
+          />
         </thead>
         <tbody>
           {currentPageData.map((row, idx) => (
-            <tr key={idx}>
-              <td>
-                <input
-                  type="checkbox"
-                  checked={isRowSelected(row)}
-                  onChange={() => toggleRowSelection(row)}
-                />
-              </td>
-              {headers.map((key) => (
-                <td key={key}>
-                  {row[key] !== null && row[key] !== undefined
-                    ? row[key].toString()
-                    : ""}
-                </td>
-              ))}
-              <td>
-                <button onClick={() => handleAction("view", row)}>View</button>{" "}
-                <button onClick={() => handleAction("edit", row)}>Edit</button>{" "}
-                <button onClick={() => handleAction("delete", row)}>
-                  Delete
-                </button>
-              </td>
-            </tr>
+            <TableRow
+              key={idx}
+              row={row}
+              headers={headers}
+              isSelected={isRowSelected(row)}
+              onToggleSelect={() => toggleRowSelection(row)}
+              onAction={handleAction}
+            />
           ))}
         </tbody>
       </table>
@@ -225,38 +163,11 @@ export const DataTable = ({
       </div>
 
       {filteredData.length > pageSize && (
-        <div style={{ marginTop: "16px", textAlign: "center" }}>
-          <button
-            onClick={() => dispatch({ type: types.PREVPAGE })}
-            disabled={currentPage === 1}
-          >
-            Prev
-          </button>
-          {generatePageNumbers().map((page, idx) =>
-            page === "..." ? (
-              <span key={`ellipsis-${idx}`} style={{ margin: "0 5px" }}>
-                ...
-              </span>
-            ) : (
-              <button
-                key={page}
-                onClick={() => dispatch({ type: types.GOTOPAGE, page })}
-                style={{
-                  fontWeight: page === currentPage ? "bold" : "normal",
-                  margin: "0 4px",
-                }}
-              >
-                {page}
-              </button>
-            )
-          )}
-          <button
-            onClick={() => dispatch({ type: types.NEXTPAGE })}
-            disabled={currentPage === totalPages}
-          >
-            Next
-          </button>
-        </div>
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          dispatch={dispatch}
+        />
       )}
     </div>
   );

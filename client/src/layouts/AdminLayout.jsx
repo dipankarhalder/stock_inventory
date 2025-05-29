@@ -5,7 +5,9 @@ export const AdminLayout = () => {
   return (
     <div className="app_admin_cover">
       <Sidebar />
-      <Outlet />
+      <div className="app_main_content_area">
+        <Outlet />
+      </div>
     </div>
   );
 };

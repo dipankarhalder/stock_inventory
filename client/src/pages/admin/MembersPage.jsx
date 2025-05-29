@@ -1,5 +1,11 @@
+import { Breadcrumb } from "../../shared/breadcrumb/Breadcrumb";
 import { DataTable } from "../../shared/table/DataTable";
 import { userData } from "../../constant/user";
+
+const breadcrumbData = [
+  { title: "Admin", path: "/admin" },
+  { title: "Members" },
+];
 
 export const MembersPage = () => {
   const handleRowAction = (actionType, rowData) => {
@@ -16,7 +22,8 @@ export const MembersPage = () => {
   };
 
   return (
-    <div>
+    <div className="app_page_insides">
+      <Breadcrumb items={breadcrumbData} />
       <DataTable data={userData} pageSize={5} onAction={handleRowAction} />
     </div>
   );
