@@ -30,11 +30,22 @@ function reducer(state, action) {
   }
 }
 
-export const DataTable = ({ data, pageSize = 10, onAction }) => {
+export const DataTable = ({
+  data,
+  pageSize = 10,
+  onAction,
+  onSelectionChange,
+}) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const { currentPage, searchQuery } = state;
 
+  const [selectedRows, setSelectedRows] = useState([]);
   const debouncedSearch = useDebounce(searchQuery, 300);
+
+  useEffect(() => {
+    if (onSelectionChange) onSelectionChange(selectedRows);
+  }, [selectedRows, onSelectionChange]);
+
   const headers = useMemo(
     () => (data.length > 0 ? Object.keys(data[0]) : []),
     [data]
@@ -53,6 +64,39 @@ export const DataTable = ({ data, pageSize = 10, onAction }) => {
   const getCurrentPageData = () => {
     const start = (currentPage - 1) * pageSize;
     return filteredData.slice(start, start + pageSize);
+  };
+
+  const currentPageData = getCurrentPageData();
+
+  const isRowSelected = (row) =>
+    selectedRows.some((r) => JSON.stringify(r) === JSON.stringify(row));
+
+  const toggleRowSelection = (row) => {
+    setSelectedRows((prev) =>
+      isRowSelected(row)
+        ? prev.filter((r) => JSON.stringify(r) !== JSON.stringify(row))
+        : [...prev, row]
+    );
+  };
+
+  const isAllPageSelected = currentPageData.every(isRowSelected);
+
+  const toggleSelectAllCurrentPage = () => {
+    if (isAllPageSelected) {
+      setSelectedRows((prev) =>
+        prev.filter(
+          (row) =>
+            !currentPageData.some(
+              (r) => JSON.stringify(r) === JSON.stringify(row)
+            )
+        )
+      );
+    } else {
+      const newSelections = currentPageData.filter(
+        (row) => !isRowSelected(row)
+      );
+      setSelectedRows((prev) => [...prev, ...newSelections]);
+    }
   };
 
   const generatePageNumbers = () => {
@@ -77,6 +121,30 @@ export const DataTable = ({ data, pageSize = 10, onAction }) => {
     }
   };
 
+  const handleDeleteSelected = () => {
+    if (onAction) {
+      onAction("deleteSelected", selectedRows);
+    }
+    setSelectedRows([]); // Optional: reset after delete
+  };
+
+  const handleExportCSV = () => {
+    const headers = Object.keys(selectedRows[0] || {});
+    const csvRows = [
+      headers.join(","), // header row
+      ...selectedRows.map((row) =>
+        headers.map((field) => `"${row[field] ?? ""}"`).join(",")
+      ),
+    ];
+    const blob = new Blob([csvRows.join("\n")], { type: "text/csv" });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "export.csv";
+    a.click();
+    window.URL.revokeObjectURL(url);
+  };
+
   return (
     <div style={{ overflowX: "auto" }}>
       <div style={{ marginBottom: "12px", textAlign: "right" }}>
@@ -89,6 +157,13 @@ export const DataTable = ({ data, pageSize = 10, onAction }) => {
           }
           style={{ padding: "6px 10px", width: "200px" }}
         />
+
+        {selectedRows.length > 0 && (
+          <div style={{ display: "flex", gap: "10px" }}>
+            <button onClick={handleDeleteSelected}>Delete Selected</button>
+            <button onClick={handleExportCSV}>Export CSV</button>
+          </div>
+        )}
       </div>
 
       <table
@@ -99,6 +174,13 @@ export const DataTable = ({ data, pageSize = 10, onAction }) => {
       >
         <thead>
           <tr>
+            <th>
+              <input
+                type="checkbox"
+                checked={isAllPageSelected}
+                onChange={toggleSelectAllCurrentPage}
+              />
+            </th>
             {headers.map((header) => (
               <th key={header} style={{ textTransform: "capitalize" }}>
                 {header.replace(/_/g, " ")}
@@ -108,8 +190,15 @@ export const DataTable = ({ data, pageSize = 10, onAction }) => {
           </tr>
         </thead>
         <tbody>
-          {getCurrentPageData().map((row, idx) => (
+          {currentPageData.map((row, idx) => (
             <tr key={idx}>
+              <td>
+                <input
+                  type="checkbox"
+                  checked={isRowSelected(row)}
+                  onChange={() => toggleRowSelection(row)}
+                />
+              </td>
               {headers.map((key) => (
                 <td key={key}>
                   {row[key] !== null && row[key] !== undefined
@@ -128,6 +217,12 @@ export const DataTable = ({ data, pageSize = 10, onAction }) => {
           ))}
         </tbody>
       </table>
+
+      <div style={{ marginTop: "12px" }}>
+        <strong>
+          {selectedRows.length} of {filteredData.length} row(s) selected
+        </strong>
+      </div>
 
       {filteredData.length > pageSize && (
         <div style={{ marginTop: "16px", textAlign: "center" }}>
