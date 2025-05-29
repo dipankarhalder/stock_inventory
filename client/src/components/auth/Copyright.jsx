@@ -5,7 +5,7 @@ export const Copyright = () => {
     <div className="app_content_footer">
       <p>
         &copy; {new Date().getFullYear()}
-        <Link to="https://thepixelwiz.in/" target="_blank">
+        <Link to="https://thepixelwiz.com/" target="_blank">
           Pixelwiz Private Limited.
         </Link>
         All Rights Reserved.
