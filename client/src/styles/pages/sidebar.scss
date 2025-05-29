@@ -1,0 +1,135 @@
+.app_sidebar {
+  width: 270px;
+  height: 100dvh;
+  overflow: auto;
+  display: flex;
+  background: $white;
+  flex-direction: column;
+  justify-content: space-between;
+  border-right: 1px solid lighten($themegray, 40%);
+
+  .app_top_sidebar {
+    display: flex;
+    flex-direction: column;
+
+    .app_side_logo {
+      display: flex;
+      width: 100%;
+      padding: 18px 25px;
+    }
+
+    .app_create_project {
+      display: flex;
+      padding: 30px 24px;
+
+      & > a {
+        display: flex;
+        background: $themeblue;
+        padding: 10px 30px 10px 20px;
+        border-radius: 8px;
+        align-items: center;
+        color: $white;
+        gap: 10px;
+
+        & > span {
+          width: 20px;
+          height: 20px;
+
+          & > svg {
+            width: 20px;
+            height: 20px;
+          }
+        }
+      }
+    }
+
+    .app_sidebar_cover {
+      display: flex;
+      flex-direction: column;
+      padding: 0 24px;
+
+      .app_sideber_item {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 30px;
+
+        & > p {
+          text-transform: uppercase;
+          font-size: 12px;
+          color: lighten($themegray, 10%);
+          margin-bottom: 16px;
+        }
+
+        ul {
+          gap: 16px;
+          display: flex;
+          flex-direction: column;
+
+          li {
+            display: flex;
+
+            & > a {
+              display: flex;
+              gap: 14px;
+              align-items: center;
+
+              & > p {
+                font-size: 15px;
+                line-height: 18px;
+                color: $themedgray;
+              }
+
+              & > span {
+                width: 18px;
+                height: 18px;
+                color: $themedgray;
+
+                & > svg {
+                  width: 18px;
+                  height: 18px;
+                }
+              }
+
+              &:hover {
+                & > p {
+                  color: $themeblue;
+                }
+                & > span {
+                  color: $themeblue;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .app_logout {
+    width: 100%;
+    padding: 0 24px 30px;
+
+    .app_logout_inside {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      & > p {
+        font-size: 16px;
+        line-height: 18px;
+        color: $themedgray;
+      }
+
+      & > span {
+        width: 24px;
+        height: 24px;
+        color: $themeerror;
+
+        & > svg {
+          width: 24px;
+          height: 24px;
+        }
+      }
+    }
+  }
+}

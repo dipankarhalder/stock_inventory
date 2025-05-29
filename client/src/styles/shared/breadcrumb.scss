@@ -1,0 +1,47 @@
+.app_breadcrumb_sec {
+  display: flex;
+  height: 46px;
+  padding: 0 30px;
+  align-items: center;
+  box-shadow: 0px 2px 6px -1px rgba(0, 0, 0, 0.08);
+
+  & > ul {
+    display: flex;
+
+    li {
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+
+      & > a {
+        color: $themegray;
+
+        &:hover {
+          color: $themeblue;
+          text-decoration: underline;
+        }
+      }
+
+      & > span {
+        width: 16px;
+        height: 16px;
+        margin: 0 10px;
+        color: $themegray;
+
+        & > svg {
+          width: 16px;
+          height: 16px;
+        }
+      }
+
+      &:last-child {
+        & > span {
+          height: auto;
+          width: auto;
+          margin: 0px;
+          color: $themedark;
+        }
+      }
+    }
+  }
+}
