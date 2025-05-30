@@ -4,9 +4,7 @@ export const TableHeader = ({ headers, isAllSelected, onSelectAll }) => (
       <input type="checkbox" checked={isAllSelected} onChange={onSelectAll} />
     </th>
     {headers.map((header) => (
-      <th key={header} style={{ textTransform: "capitalize" }}>
-        {header.replace(/_/g, " ")}
-      </th>
+      <th key={header}>{header.replace(/_/g, " ")}</th>
     ))}
     <th>Action</th>
   </tr>

@@ -27,6 +27,7 @@ function reducer(state, action) {
 }
 
 export const DataTable = ({
+  tableTitle,
   data,
   pageSize = 10,
   onAction,
@@ -120,55 +121,56 @@ export const DataTable = ({
   };
 
   return (
-    <div style={{ overflowX: "auto" }}>
-      <SearchBar
-        searchQuery={searchQuery}
-        dispatch={dispatch}
-        selectedRows={selectedRows}
-        onDelete={handleDeleteSelected}
-        onExport={handleExportCSV}
-      />
-
-      <table
-        border="1"
-        cellPadding="10"
-        cellSpacing="0"
-        style={{ borderCollapse: "collapse", width: "100%" }}
-      >
-        <thead>
-          <TableHeader
-            headers={headers}
-            isAllSelected={isAllPageSelected}
-            onSelectAll={toggleSelectAllCurrentPage}
-          />
-        </thead>
-        <tbody>
-          {currentPageData.map((row, idx) => (
-            <TableRow
-              key={idx}
-              row={row}
+    <div className="app_table_cover">
+      <div className="app_table_top_header">
+        <h1>{tableTitle}</h1>
+        <SearchBar
+          searchQuery={searchQuery}
+          dispatch={dispatch}
+          selectedRows={selectedRows}
+          onDelete={handleDeleteSelected}
+          onExport={handleExportCSV}
+        />
+      </div>
+      <div className="app_table_structure">
+        <table>
+          <thead>
+            <TableHeader
               headers={headers}
-              isSelected={isRowSelected(row)}
-              onToggleSelect={() => toggleRowSelection(row)}
-              onAction={handleAction}
+              isAllSelected={isAllPageSelected}
+              onSelectAll={toggleSelectAllCurrentPage}
             />
-          ))}
-        </tbody>
-      </table>
-
-      <div style={{ marginTop: "12px" }}>
-        <strong>
-          {selectedRows.length} of {filteredData.length} row(s) selected
-        </strong>
+          </thead>
+          <tbody>
+            {currentPageData.map((row, idx) => (
+              <TableRow
+                key={idx}
+                row={row}
+                headers={headers}
+                isSelected={isRowSelected(row)}
+                onToggleSelect={() => toggleRowSelection(row)}
+                onAction={handleAction}
+              />
+            ))}
+          </tbody>
+        </table>
       </div>
 
-      {filteredData.length > pageSize && (
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          dispatch={dispatch}
-        />
-      )}
+      <div className="app_table_pagination">
+        <div className="app_select_item_view">
+          <strong>
+            {selectedRows.length} of {filteredData.length} row(s) selected
+          </strong>
+        </div>
+
+        {filteredData.length > pageSize && (
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            dispatch={dispatch}
+          />
+        )}
+      </div>
     </div>
   );
 };

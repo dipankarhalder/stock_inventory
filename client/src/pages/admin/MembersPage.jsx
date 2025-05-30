@@ -4,7 +4,7 @@ import { userData } from "../../constant/user";
 
 const breadcrumbData = [
   { title: "Admin", path: "/admin" },
-  { title: "Members" },
+  { title: "Manage members" },
 ];
 
 export const MembersPage = () => {
@@ -24,7 +24,14 @@ export const MembersPage = () => {
   return (
     <div className="app_page_insides">
       <Breadcrumb items={breadcrumbData} />
-      <DataTable data={userData} pageSize={5} onAction={handleRowAction} />
+      <div className="app_main_container">
+        <DataTable
+          tableTitle="Manage Members"
+          data={userData}
+          pageSize={10}
+          onAction={handleRowAction}
+        />
+      </div>
     </div>
   );
 };

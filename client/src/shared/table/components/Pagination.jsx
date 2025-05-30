@@ -1,4 +1,5 @@
 import { types } from "../../../constant/types";
+import { Larrow, Rarrow } from "../../../icons";
 
 export const Pagination = ({ currentPage, totalPages, dispatch }) => {
   const generatePageNumbers = () => {
@@ -18,26 +19,23 @@ export const Pagination = ({ currentPage, totalPages, dispatch }) => {
   };
 
   return (
-    <div style={{ marginTop: "16px", textAlign: "center" }}>
+    <div className="app_pagination_items">
       <button
         onClick={() => dispatch({ type: types.PREVPAGE })}
         disabled={currentPage === 1}
       >
-        Prev
+        <Larrow />
       </button>
       {generatePageNumbers().map((page, idx) =>
         page === "..." ? (
-          <span key={`ellipsis-${idx}`} style={{ margin: "0 5px" }}>
+          <span key={`ellipsis-${idx}`} className="app_pager_dots">
             ...
           </span>
         ) : (
           <button
             key={page}
             onClick={() => dispatch({ type: types.GOTOPAGE, page })}
-            style={{
-              fontWeight: page === currentPage ? "bold" : "normal",
-              margin: "0 4px",
-            }}
+            className={`${page === currentPage ? "btn_pagination_active" : ""}`}
           >
             {page}
           </button>
@@ -47,7 +45,7 @@ export const Pagination = ({ currentPage, totalPages, dispatch }) => {
         onClick={() => dispatch({ type: types.NEXTPAGE })}
         disabled={currentPage === totalPages}
       >
-        Next
+        <Rarrow />
       </button>
     </div>
   );
