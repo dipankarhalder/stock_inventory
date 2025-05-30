@@ -8,6 +8,11 @@
     .app_page_insides {
       display: flex;
       flex-direction: column;
+
+      .app_main_container {
+        width: 100%;
+        padding: 20px 30px 30px;
+      }
     }
   }
 }

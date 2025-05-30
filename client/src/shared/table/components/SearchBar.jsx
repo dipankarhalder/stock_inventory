@@ -1,3 +1,6 @@
+import { types } from "../../../constant/types";
+import { Delete, Exports } from "../../../icons";
+
 export const SearchBar = ({
   searchQuery,
   dispatch,
@@ -5,25 +8,24 @@ export const SearchBar = ({
   onDelete,
   onExport,
 }) => (
-  <div style={{ marginBottom: "12px", textAlign: "right" }}>
+  <div className="app_table_search">
     <input
       type="text"
       placeholder="Search..."
       value={searchQuery}
-      onChange={(e) => dispatch({ type: "SET_SEARCH", query: e.target.value })}
-      style={{ padding: "6px 10px", width: "200px" }}
+      onChange={(e) =>
+        dispatch({ type: types.SETSEARCH, query: e.target.value })
+      }
     />
     {selectedRows.length > 0 && (
-      <div
-        style={{
-          display: "flex",
-          gap: "10px",
-          marginTop: "10px",
-          justifyContent: "flex-end",
-        }}
-      >
-        <button onClick={onDelete}>Delete Selected</button>
-        <button onClick={onExport}>Export CSV</button>
+      <div className="app_table_top_btn">
+        <button onClick={onExport} className="app_table_download">
+          <Exports />
+          Export CSV
+        </button>
+        <button onClick={onDelete} className="app_table_delete">
+          <Delete /> Delete
+        </button>
       </div>
     )}
   </div>
