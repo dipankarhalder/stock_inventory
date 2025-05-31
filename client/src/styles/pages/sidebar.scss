@@ -72,6 +72,8 @@
               display: flex;
               gap: 14px;
               align-items: center;
+              position: relative;
+              z-index: 1;
 
               & > p {
                 font-size: 15px;
@@ -97,6 +99,33 @@
                 & > span {
                   color: $themeblue;
                 }
+              }
+            }
+
+            &.active_sidebar {
+              position: relative;
+
+              & > a {
+                & > p {
+                  color: $themeblue;
+                }
+
+                & > span {
+                  color: $themeblue;
+                }
+              }
+
+              &:after {
+                content: "";
+                position: absolute;
+                top: -7px;
+                left: -12px;
+                width: calc(100% + 24px);
+                height: 34px;
+                z-index: 0;
+                background: $infobg;
+                padding: 10px 20px;
+                border-radius: 4px;
               }
             }
           }
