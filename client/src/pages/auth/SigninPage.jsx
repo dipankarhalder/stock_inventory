@@ -1,10 +1,16 @@
-import { useReducer, useState } from "react";
+import { useReducer, useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { paths } from "../../routers/links";
 import { types } from "../../constant/types";
 import { Button } from "../../shared/button/Button";
 import { FormInput } from "../../components/auth/FormInput";
+import { ToastContext } from "../../shared/toast/context/ToastContext";
 import { validateLoginForm } from "../../utils/validationUtils";
+import { toastStatus, btnStatus } from "../../constant";
+import { postServices } from "../../services/core.services";
+import { loginService } from "../../services/endpoints";
+import { handleApiErrorToast } from "../../utils/handleApiErrorToast";
+import { useAuthStore } from "../../stores/authStore";
 
 const initialState = {
   email: "",
@@ -27,7 +33,9 @@ const formReducer = (state, action) => {
 export const SigninPage = () => {
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
+  const { addToast } = useContext(ToastContext);
   const [state, dispatch] = useReducer(formReducer, initialState);
+  const { isLoading, setLoading, setToken } = useAuthStore();
 
   const formFields = [
     {
@@ -46,19 +54,36 @@ export const SigninPage = () => {
     },
   ];
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     const newErrors = validateLoginForm(state);
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
-    if (state.email === "dipankar@gmail.com" && state.password === "Dip@1234") {
-      navigate(paths.adminDashboard);
-    }
 
-    dispatch({ type: types.RESET });
-    setErrors({});
+    setLoading(true);
+
+    try {
+      const res = await postServices(loginService, state);
+      const isError = await handleApiErrorToast(res, addToast, toastStatus);
+      if (isError) return;
+
+      setToken(res.data.token);
+
+      await addToast({
+        type: toastStatus.SUCCESS,
+        title: "Success!",
+        description: res.data.message,
+      });
+
+      dispatch({ type: types.RESET });
+      setErrors({});
+      navigate(paths.userDashboard);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -93,7 +118,7 @@ export const SigninPage = () => {
             </p>
           </div>
           <div>
-            <Button>Login</Button>
+            <Button status={isLoading && btnStatus.LOADING}>Login</Button>
           </div>
         </form>
         <div className="app_links">
