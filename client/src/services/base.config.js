@@ -8,6 +8,14 @@ export const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   (config) => {
+    const token = localStorage.getItem("token");
+    const authExcludedRoutes = ["/signup", "/signin"];
+    const isAuthExcluded = authExcludedRoutes.some((route) =>
+      config.url.includes(route)
+    );
+    if (token && !isAuthExcluded) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
     return config;
   },
   (error) => {

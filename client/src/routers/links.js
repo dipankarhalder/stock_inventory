@@ -26,6 +26,7 @@ export const paths = {
 
   // supplier
   userSuppliers: "suppliers",
+  userAddSupplier: "add-supplier",
 
   // tax
   userTaxes: "taxes",
