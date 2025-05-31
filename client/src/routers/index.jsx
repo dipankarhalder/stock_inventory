@@ -31,6 +31,9 @@ import { SettingsPage } from "../pages/admin/SettingsPage";
 // users
 import { UserDashboardPage } from "../pages/users/DashboardPage";
 import { UserMembersPage } from "../pages/users/MembersPage";
+import { TaxesPage } from "../pages/users/TaxesPage";
+import { ListTaxes } from "../pages/users/taxes/ListTaxes";
+import { AddTax } from "../pages/users/taxes/AddTax";
 
 export const router = createBrowserRouter([
   {
@@ -123,8 +126,22 @@ export const router = createBrowserRouter([
         element: <UserDashboardPage />,
       },
       {
-        path: paths.adminMembers,
+        path: paths.userMembers,
         element: <UserMembersPage />,
+      },
+      {
+        path: paths.userTaxes,
+        element: <TaxesPage />,
+        children: [
+          {
+            index: true,
+            element: <ListTaxes />,
+          },
+          {
+            path: paths.userAddTax,
+            element: <AddTax />,
+          },
+        ],
       },
     ],
   },

@@ -3,10 +3,12 @@ import { navUserlinks } from "../../constant/static";
 import { MainLogo } from "../auth/Logo";
 import { Plus, Logout } from "../../icons";
 import { useAuthStore } from "../../stores/authStore";
+import { usePopStore } from "../../stores/popStore";
 
 export const UserSidebar = () => {
   const location = useLocation();
   const { logout } = useAuthStore();
+  const { setPopOpen } = usePopStore();
 
   const currentPath = location.pathname;
   const isLinkActive = (linkPath) =>
@@ -22,9 +24,9 @@ export const UserSidebar = () => {
           <MainLogo />
         </div>
         <div className="app_create_project">
-          <Link to="/">
+          <span onClick={() => setPopOpen()}>
             <Plus /> Create Project
-          </Link>
+          </span>
         </div>
         <div className="app_sidebar_cover">
           {navUserlinks.map((section) => {

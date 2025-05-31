@@ -8,9 +8,38 @@
     justify-content: space-between;
     margin-bottom: 20px;
 
-    h1 {
-      font-size: 18px;
-      font-weight: 500;
+    .app_manage_heading_btn {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+
+      h1 {
+        font-size: 17px;
+        font-weight: 500;
+      }
+
+      .app_new_btn {
+        display: flex;
+        margin-left: 20px;
+
+        & > a {
+          font-size: 14px;
+          font-weight: 500;
+          height: 30px;
+          color: $white;
+          padding: 0 16px;
+          border-radius: 6px;
+          line-height: 30px;
+          background: $themeblue;
+          transition: 0.5s;
+          cursor: pointer;
+
+          &:hover {
+            background: $themehblue;
+            transition: 0.5s;
+          }
+        }
+      }
     }
 
     .app_table_search {
