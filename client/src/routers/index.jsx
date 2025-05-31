@@ -40,6 +40,7 @@ import { AddTax } from "../pages/users/taxes/AddTax";
 // user suppliers
 import { SupplierPage } from "../pages/users/supplier/SupplierPage";
 import { ListSupplier } from "../pages/users/supplier/ListSupplier";
+import { AddSupplier } from "../pages/users/supplier/AddSupplier";
 
 export const router = createBrowserRouter([
   {
@@ -144,6 +145,10 @@ export const router = createBrowserRouter([
           {
             index: true,
             element: <ListSupplier />,
+          },
+          {
+            path: paths.userAddSupplier,
+            element: <AddSupplier />,
           },
         ],
       },
