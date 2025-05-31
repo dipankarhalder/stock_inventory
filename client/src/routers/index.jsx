@@ -4,6 +4,7 @@ import { paths } from "./links";
 // layouts and error
 import { AuthLayout } from "../layouts/AuthLayout";
 import { AdminLayout } from "../layouts/AdminLayout";
+import { UserLayout } from "../layouts/UserLayout";
 import { ErrorPage } from "../pages/common/ErrorPage";
 
 // authentication
@@ -26,6 +27,10 @@ import { ApprovalPage } from "../pages/admin/ApprovalPage";
 import { TransactionsPage } from "../pages/admin/TransactionsPage";
 import { ProfilePage } from "../pages/admin/ProfilePage";
 import { SettingsPage } from "../pages/admin/SettingsPage";
+
+// users
+import { UserDashboardPage } from "../pages/users/DashboardPage";
+import { UserMembersPage } from "../pages/users/MembersPage";
 
 export const router = createBrowserRouter([
   {
@@ -106,6 +111,20 @@ export const router = createBrowserRouter([
       {
         path: paths.adminSettings,
         element: <SettingsPage />,
+      },
+    ],
+  },
+  {
+    path: paths.userDashboard,
+    element: <UserLayout />,
+    children: [
+      {
+        index: true,
+        element: <UserDashboardPage />,
+      },
+      {
+        path: paths.adminMembers,
+        element: <UserMembersPage />,
       },
     ],
   },

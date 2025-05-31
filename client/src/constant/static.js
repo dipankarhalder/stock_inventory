@@ -4,6 +4,7 @@ import {
   Teams,
   Analysis,
   Categories,
+  SubCategories,
   Companies,
   Customers,
   Plans,
@@ -12,6 +13,10 @@ import {
   Transactions,
   Profile,
   Settings,
+  Stocks,
+  Supplier,
+  Taxes,
+  Billings,
 } from "../icons";
 import { paths } from "../routers/links";
 
@@ -49,12 +54,6 @@ export const navlinks = [
         icon: Customers,
       },
       { id: 4, label: "Plans", path: paths.adminPlans, icon: Plans },
-      {
-        id: 5,
-        label: "Invoice",
-        path: paths.adminCategories,
-        icon: Categories,
-      },
     ],
   },
   {
@@ -87,6 +86,97 @@ export const navlinks = [
     children: [
       { id: 1, label: "Profile", path: paths.adminProfile, icon: Profile },
       { id: 2, label: "Settings", path: paths.adminSettings, icon: Settings },
+    ],
+  },
+];
+
+export const navUserlinks = [
+  {
+    id: 1,
+    label: "Main Menu",
+    children: [
+      { id: 1, label: "Dashboard", path: paths.userDashboard, icon: Home },
+      { id: 3, label: "Members", path: paths.adminMembers, icon: Members },
+      { id: 2, label: "Analysis", path: paths.adminAnalysis, icon: Analysis },
+    ],
+  },
+  {
+    id: 2,
+    label: "Shops",
+    children: [
+      {
+        id: 1,
+        label: "Categories",
+        path: paths.adminCategories,
+        icon: Categories,
+      },
+      {
+        id: 4,
+        label: "Sub Categories",
+        path: paths.adminCategories,
+        icon: SubCategories,
+      },
+      {
+        id: 2,
+        label: "Products",
+        path: paths.adminCompanies,
+        icon: Companies,
+      },
+      {
+        id: 3,
+        label: "Stocks",
+        path: paths.adminCustomers,
+        icon: Stocks,
+      },
+      {
+        id: 5,
+        label: "Suppliers",
+        path: paths.adminCustomers,
+        icon: Supplier,
+      },
+    ],
+  },
+  {
+    id: 3,
+    label: "Taxes and Discounts",
+    children: [
+      {
+        id: 1,
+        label: "Taxes",
+        path: paths.adminSubscribers,
+        icon: Taxes,
+      },
+      {
+        id: 4,
+        label: "Discounts",
+        path: paths.adminSubscribers,
+        icon: Taxes,
+      },
+    ],
+  },
+  {
+    id: 5,
+    label: "Billings",
+    children: [
+      {
+        id: 2,
+        label: "Billings",
+        path: paths.adminApproval,
+        icon: Billings,
+      },
+      {
+        id: 3,
+        label: "Invoices",
+        path: paths.adminTransactions,
+        icon: Transactions,
+      },
+    ],
+  },
+  {
+    id: 4,
+    label: "Personal",
+    children: [
+      { id: 1, label: "Profile", path: paths.adminProfile, icon: Profile },
     ],
   },
 ];

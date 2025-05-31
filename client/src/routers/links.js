@@ -19,4 +19,7 @@ export const paths = {
   adminTransactions: "transactions",
   adminProfile: "profile",
   adminSettings: "settings",
+
+  // user
+  userDashboard: "/users",
 };
