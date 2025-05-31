@@ -1,9 +1,9 @@
 import { Link, useLocation } from "react-router-dom";
-import { navlinks } from "../../constant/static";
+import { navUserlinks } from "../../constant/static";
 import { MainLogo } from "../auth/Logo";
 import { Plus, Logout } from "../../icons";
 
-export const Sidebar = () => {
+export const UserSidebar = () => {
   const location = useLocation();
   const currentPath = location.pathname;
 
@@ -11,7 +11,7 @@ export const Sidebar = () => {
     currentPath === linkPath || currentPath.startsWith(linkPath + "/");
 
   const isDashboardPath = (path) =>
-    path === "/admin" || path === "admin" || path === "/admin/";
+    path === "/users" || path === "users" || path === "/users/";
 
   return (
     <div className="app_sidebar">
@@ -19,15 +19,19 @@ export const Sidebar = () => {
         <div className="app_side_logo">
           <MainLogo />
         </div>
-        <div className="app_create_project"></div>
+        <div className="app_create_project">
+          <Link to="/">
+            <Plus /> Create Project
+          </Link>
+        </div>
         <div className="app_sidebar_cover">
-          {navlinks.map((section) => {
+          {navUserlinks.map((section) => {
             const sectionIsActive = section.children.some((itm) => {
               const path = itm.path.startsWith("/")
                 ? itm.path
-                : `/admin/${itm.path}`;
+                : `/users/${itm.path}`;
               const isActive = isDashboardPath(path)
-                ? currentPath === "/admin"
+                ? currentPath === "/users"
                 : isLinkActive(path);
               return isActive;
             });
@@ -44,10 +48,10 @@ export const Sidebar = () => {
                   {section.children.map((itm) => {
                     const linkPath = itm.path.startsWith("/")
                       ? itm.path
-                      : `/admin/${itm.path}`;
+                      : `/users/${itm.path}`;
 
                     const isActive = isDashboardPath(linkPath)
-                      ? currentPath === "/admin"
+                      ? currentPath === "/users"
                       : isLinkActive(linkPath);
 
                     return (
