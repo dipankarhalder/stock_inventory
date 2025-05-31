@@ -2,11 +2,13 @@ import { Link, useLocation } from "react-router-dom";
 import { navUserlinks } from "../../constant/static";
 import { MainLogo } from "../auth/Logo";
 import { Plus, Logout } from "../../icons";
+import { useAuthStore } from "../../stores/authStore";
 
 export const UserSidebar = () => {
   const location = useLocation();
-  const currentPath = location.pathname;
+  const { logout } = useAuthStore();
 
+  const currentPath = location.pathname;
   const isLinkActive = (linkPath) =>
     currentPath === linkPath || currentPath.startsWith(linkPath + "/");
 
@@ -72,7 +74,7 @@ export const UserSidebar = () => {
         </div>
       </div>
       <div className="app_logout">
-        <div className="app_logout_inside">
+        <div className="app_logout_inside" onClick={() => logout()}>
           <Logout />
           <p>Logout</p>
         </div>

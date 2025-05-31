@@ -1,12 +1,14 @@
 import { Link, useLocation } from "react-router-dom";
 import { navlinks } from "../../constant/static";
 import { MainLogo } from "../auth/Logo";
-import { Plus, Logout } from "../../icons";
+import { Logout } from "../../icons";
+import { useAuthStore } from "../../stores/authStore";
 
 export const Sidebar = () => {
   const location = useLocation();
-  const currentPath = location.pathname;
+  const { logout } = useAuthStore();
 
+  const currentPath = location.pathname;
   const isLinkActive = (linkPath) =>
     currentPath === linkPath || currentPath.startsWith(linkPath + "/");
 
@@ -68,7 +70,7 @@ export const Sidebar = () => {
         </div>
       </div>
       <div className="app_logout">
-        <div className="app_logout_inside">
+        <div className="app_logout_inside" onClick={() => logout()}>
           <Logout />
           <p>Logout</p>
         </div>
