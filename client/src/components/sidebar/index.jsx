@@ -26,7 +26,6 @@ export const Sidebar = () => {
         </div>
         <div className="app_sidebar_cover">
           {navlinks.map((section) => {
-            // Determine if any child in section is active
             const sectionIsActive = section.children.some((itm) => {
               const path = itm.path.startsWith("/")
                 ? itm.path
