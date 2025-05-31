@@ -1,14 +1,20 @@
-import { Fragment, useState, useReducer } from "react";
-import { Link } from "react-router-dom";
+import { useState, useReducer, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { paths } from "../../routers/links";
 import { types } from "../../constant/types";
 import { Button } from "../../shared/button/Button";
 import { FormInput } from "../../components/auth/FormInput";
+import { ToastContext } from "../../shared/toast/context/ToastContext";
 import {
   passwordRules,
   getPasswordRuleText,
   validateRegisterForm,
 } from "../../utils/validationUtils";
+import { toastStatus, btnStatus } from "../../constant";
+import { postServices } from "../../services/core.services";
+import { registerService } from "../../services/endpoints";
+import { handleApiErrorToast } from "../../utils/handleApiErrorToast";
+import { useAuthStore } from "../../stores/authStore";
 
 const initialState = {
   firstName: "",
@@ -44,8 +50,11 @@ const formReducer = (state, action) => {
 };
 
 export const SignupPage = () => {
+  const navigate = useNavigate();
   const [errors, setErrors] = useState({});
+  const { addToast } = useContext(ToastContext);
   const [state, dispatch] = useReducer(formReducer, initialState);
+  const { isLoading, setLoading } = useAuthStore();
 
   const formFields = [
     {
@@ -85,17 +94,37 @@ export const SignupPage = () => {
     },
   ];
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     const newErrors = validateRegisterForm(state);
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
 
-    console.log("Form submitted:", state);
-    dispatch({ type: types.RESET });
-    setErrors({});
+    setLoading(true);
+
+    try {
+      const res = await postServices(registerService, {
+        ...state,
+        role: "admin",
+      });
+      const isError = await handleApiErrorToast(res, addToast, toastStatus);
+      if (isError) return;
+
+      await addToast({
+        type: toastStatus.SUCCESS,
+        title: "Success!",
+        description: res.data.message,
+      });
+
+      dispatch({ type: types.RESET });
+      setErrors({});
+      navigate(paths.login);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -132,7 +161,7 @@ export const SignupPage = () => {
             </div>
           ))}
           <div>
-            <Button>Register</Button>
+            <Button status={isLoading && btnStatus.LOADING}>Register</Button>
           </div>
         </form>
         <div className="app_links">
