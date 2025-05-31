@@ -1,12 +1,12 @@
 import { Outlet } from "react-router-dom";
-import { Breadcrumb } from "../../shared/breadcrumb/Breadcrumb";
+import { Breadcrumb } from "../../../shared/breadcrumb/Breadcrumb";
 
 const breadcrumbData = [
   { title: "Users", path: "/users" },
-  { title: "Manage taxes" },
+  { title: "Manage Suppliers" },
 ];
 
-export const TaxesPage = () => {
+export const SupplierPage = () => {
   return (
     <div className="app_page_insides">
       <Breadcrumb items={breadcrumbData} />

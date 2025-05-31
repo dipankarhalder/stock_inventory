@@ -24,6 +24,9 @@ export const paths = {
   userDashboard: "/users",
   userMembers: "members",
 
+  // supplier
+  userSuppliers: "suppliers",
+
   // tax
   userTaxes: "taxes",
   userAddTax: "add-tax",

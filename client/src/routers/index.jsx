@@ -31,9 +31,15 @@ import { SettingsPage } from "../pages/admin/SettingsPage";
 // users
 import { UserDashboardPage } from "../pages/users/DashboardPage";
 import { UserMembersPage } from "../pages/users/MembersPage";
-import { TaxesPage } from "../pages/users/TaxesPage";
+
+// User taxes
+import { TaxesPage } from "../pages/users/taxes/TaxesPage";
 import { ListTaxes } from "../pages/users/taxes/ListTaxes";
 import { AddTax } from "../pages/users/taxes/AddTax";
+
+// user suppliers
+import { SupplierPage } from "../pages/users/supplier/SupplierPage";
+import { ListSupplier } from "../pages/users/supplier/ListSupplier";
 
 export const router = createBrowserRouter([
   {
@@ -129,6 +135,20 @@ export const router = createBrowserRouter([
         path: paths.userMembers,
         element: <UserMembersPage />,
       },
+
+      // suppliers
+      {
+        path: paths.userSuppliers,
+        element: <SupplierPage />,
+        children: [
+          {
+            index: true,
+            element: <ListSupplier />,
+          },
+        ],
+      },
+
+      // taxes
       {
         path: paths.userTaxes,
         element: <TaxesPage />,
