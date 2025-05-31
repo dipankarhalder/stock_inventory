@@ -9,6 +9,8 @@ import { Pagination } from "./components/Pagination";
 const initialState = {
   currentPage: 1,
   searchQuery: "",
+  sortBy: null,
+  sortDirection: "asc",
 };
 
 function reducer(state, action) {
@@ -21,6 +23,20 @@ function reducer(state, action) {
       return { ...state, currentPage: state.currentPage - 1 };
     case types.SETSEARCH:
       return { ...state, searchQuery: action.query, currentPage: 1 };
+    case types.SORT: {
+      const { field } = action;
+      if (!field) return state;
+
+      const isSameField = state.sortBy === field;
+      const newDirection =
+        isSameField && state.sortDirection === "asc" ? "desc" : "asc";
+
+      return {
+        ...state,
+        sortBy: field,
+        sortDirection: newDirection,
+      };
+    }
     default:
       return state;
   }
@@ -32,9 +48,10 @@ export const DataTable = ({
   pageSize = 10,
   onAction,
   onSelectionChange,
+  sortableFields = [""],
 }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { currentPage, searchQuery } = state;
+  const { currentPage, searchQuery, sortBy, sortDirection } = state;
 
   const [selectedRows, setSelectedRows] = useState([]);
   const debouncedSearch = useDebounce(searchQuery, 300);
@@ -49,13 +66,29 @@ export const DataTable = ({
   );
 
   const filteredData = useMemo(() => {
-    if (!debouncedSearch) return data;
-    return data.filter((item) =>
-      Object.values(item).some((val) =>
-        val?.toString().toLowerCase().includes(debouncedSearch.toLowerCase())
-      )
-    );
-  }, [debouncedSearch, data]);
+    let result = [...data];
+
+    if (debouncedSearch) {
+      result = result.filter((item) =>
+        Object.values(item).some((val) =>
+          val?.toString().toLowerCase().includes(debouncedSearch.toLowerCase())
+        )
+      );
+    }
+
+    if (sortBy) {
+      result.sort((a, b) => {
+        const aVal = a[sortBy]?.toString().toLowerCase() || "";
+        const bVal = b[sortBy]?.toString().toLowerCase() || "";
+
+        if (aVal < bVal) return sortDirection === "asc" ? -1 : 1;
+        if (aVal > bVal) return sortDirection === "asc" ? 1 : -1;
+        return 0;
+      });
+    }
+
+    return result;
+  }, [debouncedSearch, data, sortBy, sortDirection]);
 
   const totalPages = Math.ceil(filteredData.length / pageSize);
   const start = (currentPage - 1) * pageSize;
@@ -139,6 +172,10 @@ export const DataTable = ({
               headers={headers}
               isAllSelected={isAllPageSelected}
               onSelectAll={toggleSelectAllCurrentPage}
+              sortBy={sortBy}
+              sortDirection={sortDirection}
+              dispatch={dispatch}
+              sortableFields={sortableFields}
             />
           </thead>
           <tbody>

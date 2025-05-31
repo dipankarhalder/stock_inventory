@@ -299,6 +299,48 @@ export const Larrow = () => (
   </span>
 );
 
+export const Uarrow = () => (
+  <span>
+    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
+      <path
+        d="M18 15L12 9L6 15"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  </span>
+);
+
+export const Darrow = () => (
+  <span>
+    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
+      <path
+        d="M6 9L12 15L18 9"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  </span>
+);
+
+export const ActiveFilter = () => (
+  <span>
+    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
+      <path
+        d="M7 15L12 20L17 15M7 9L12 4L17 9"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  </span>
+);
+
 export const Exports = () => (
   <span>
     <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
