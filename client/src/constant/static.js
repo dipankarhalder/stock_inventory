@@ -49,6 +49,12 @@ export const navlinks = [
         icon: Customers,
       },
       { id: 4, label: "Plans", path: paths.adminPlans, icon: Plans },
+      {
+        id: 5,
+        label: "Invoice",
+        path: paths.adminCategories,
+        icon: Categories,
+      },
     ],
   },
   {
