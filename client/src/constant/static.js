@@ -134,7 +134,7 @@ export const navUserlinks = [
       {
         id: 5,
         label: "Suppliers",
-        path: paths.adminCustomers,
+        path: paths.userSuppliers,
         icon: Supplier,
       },
     ],
