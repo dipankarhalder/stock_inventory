@@ -1,6 +1,7 @@
 import { useReducer, useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { paths } from "../../routers/links";
+import { userRole } from "../../constant";
 import { types } from "../../constant/types";
 import { Button } from "../../shared/button/Button";
 import { FormInput } from "../../components/auth/FormInput";
@@ -35,7 +36,7 @@ export const SigninPage = () => {
   const [errors, setErrors] = useState({});
   const { addToast } = useContext(ToastContext);
   const [state, dispatch] = useReducer(formReducer, initialState);
-  const { isLoading, setLoading, setToken } = useAuthStore();
+  const { isLoading, setLoading, setToken, setRole } = useAuthStore();
 
   const formFields = [
     {
@@ -70,6 +71,7 @@ export const SigninPage = () => {
       const isError = await handleApiErrorToast(res, addToast, toastStatus);
       if (isError) return;
 
+      setRole(res.data.role);
       setToken(res.data.token);
 
       await addToast({
@@ -80,7 +82,12 @@ export const SigninPage = () => {
 
       dispatch({ type: types.RESET });
       setErrors({});
-      navigate(paths.userDashboard);
+
+      if (res.data.role === userRole.ADMIN) {
+        navigate(paths.userDashboard);
+      } else {
+        navigate(paths.adminDashboard);
+      }
     } finally {
       setLoading(false);
     }

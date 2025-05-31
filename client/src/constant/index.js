@@ -16,3 +16,9 @@ export const inputStatus = {
   DISABLED: "disabled",
   LOADING: "loading",
 };
+
+export const userRole = {
+  SUPER: "super_admin",
+  ADMIN: "admin",
+  STUFF: "staff",
+};
