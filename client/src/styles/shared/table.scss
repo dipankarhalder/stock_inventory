@@ -102,13 +102,29 @@
           th {
             color: $themegray;
             text-align: left;
-            font-size: 13px;
-            font-weight: 500;
-            text-transform: uppercase;
             padding: 0.7rem 1rem;
 
             &:last-child {
               text-align: right;
+            }
+
+            p {
+              font-size: 13px;
+              font-weight: 500;
+              text-transform: uppercase;
+              display: flex;
+              align-items: center;
+
+              & > span {
+                width: 15px;
+                height: 15px;
+                margin-left: 10px;
+
+                & > svg {
+                  width: 15px;
+                  height: 15px;
+                }
+              }
             }
           }
         }
