@@ -2,7 +2,7 @@ import { DataTable } from "../../../shared/table/DataTable";
 import { userData } from "../../../constant/user";
 import { paths } from "../../../routers/links";
 
-export const ListTaxes = () => {
+export const ListSupplier = () => {
   const handleRowAction = (actionType, rowData) => {
     console.log("Action:", actionType);
     console.log("Row Data:", rowData);
@@ -19,13 +19,13 @@ export const ListTaxes = () => {
     <>
       <div className="app_main_container">
         <DataTable
-          tableTitle="Manage Taxes"
+          tableTitle="Manage Suppliers"
           data={userData}
           pageSize={10}
           onAction={handleRowAction}
           sortableFields={["id", "name", "email"]}
           isAddBtn={true}
-          addBtnContent={"Add Tax"}
+          addBtnContent={"Add Supplier"}
           addBtnLink={paths.userAddTax}
         />
       </div>
