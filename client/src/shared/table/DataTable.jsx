@@ -1,4 +1,5 @@
 import { useReducer, useEffect, useState, useMemo } from "react";
+import { Link } from "react-router-dom";
 import { types } from "../../constant/types";
 import { useDebounce } from "../../hooks/useDebounce";
 import { SearchBar } from "./components/SearchBar";
@@ -49,6 +50,9 @@ export const DataTable = ({
   onAction,
   onSelectionChange,
   sortableFields = [""],
+  addBtnContent = "",
+  addBtnLink = "/",
+  isAddBtn,
 }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const { currentPage, searchQuery, sortBy, sortDirection } = state;
@@ -156,7 +160,14 @@ export const DataTable = ({
   return (
     <div className="app_table_cover">
       <div className="app_table_top_header">
-        <h1>{tableTitle}</h1>
+        <div className="app_manage_heading_btn">
+          <h1>{tableTitle}</h1>
+          {isAddBtn && (
+            <div className="app_new_btn">
+              <Link to={addBtnLink}>{addBtnContent}</Link>
+            </div>
+          )}
+        </div>
         <SearchBar
           searchQuery={searchQuery}
           dispatch={dispatch}

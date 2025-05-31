@@ -22,7 +22,8 @@
       display: flex;
       padding: 30px 24px;
 
-      & > a {
+      & > a,
+      & > span {
         display: flex;
         background: $themeblue;
         padding: 10px 30px 10px 20px;
@@ -30,6 +31,7 @@
         align-items: center;
         color: $white;
         gap: 10px;
+        cursor: pointer;
 
         & > span {
           width: 20px;

@@ -22,4 +22,9 @@ export const paths = {
 
   // user
   userDashboard: "/users",
+  userMembers: "members",
+
+  // tax
+  userTaxes: "taxes",
+  userAddTax: "add-tax",
 };

@@ -16,7 +16,9 @@ import {
   Stocks,
   Supplier,
   Taxes,
+  Discount,
   Billings,
+  Location,
 } from "../icons";
 import { paths } from "../routers/links";
 
@@ -96,8 +98,9 @@ export const navUserlinks = [
     label: "Main Menu",
     children: [
       { id: 1, label: "Dashboard", path: paths.userDashboard, icon: Home },
-      { id: 3, label: "Members", path: paths.adminMembers, icon: Members },
+      { id: 3, label: "Members", path: paths.userMembers, icon: Members },
       { id: 2, label: "Analysis", path: paths.adminAnalysis, icon: Analysis },
+      { id: 4, label: "Location", path: paths.adminAnalysis, icon: Location },
     ],
   },
   {
@@ -143,14 +146,14 @@ export const navUserlinks = [
       {
         id: 1,
         label: "Taxes",
-        path: paths.adminSubscribers,
+        path: paths.userTaxes,
         icon: Taxes,
       },
       {
         id: 4,
         label: "Discounts",
         path: paths.adminSubscribers,
-        icon: Taxes,
+        icon: Discount,
       },
     ],
   },
