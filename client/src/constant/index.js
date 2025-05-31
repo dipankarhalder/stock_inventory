@@ -2,7 +2,7 @@ export const toastStatus = {
   WARNING: "warning",
   SUCCESS: "success",
   INFO: "info",
-  ERRRO: "error",
+  ERROR: "error",
 };
 
 export const btnStatus = {

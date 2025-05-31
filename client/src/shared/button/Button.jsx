@@ -14,7 +14,7 @@ export const Button = ({
   return (
     <button
       className={`app_btn ${status} ${className}`}
-      onClick={!isDisabled && onClick}
+      onClick={isDisabled ? undefined : onClick}
       disabled={isDisabled}
       {...props}
     >

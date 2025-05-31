@@ -32,7 +32,7 @@ function toastReducer(state, action) {
 export const ToastProvider = ({ children }) => {
   const [state, dispatch] = useReducer(toastReducer, initialToastState);
 
-  const addToast = useCallback((message, duration = 3000) => {
+  const addToast = useCallback((message, duration = 5000) => {
     if (!message.type) {
       return false;
     }
