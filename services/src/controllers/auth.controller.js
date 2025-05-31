@@ -78,6 +78,7 @@ const userSignin = async (req, res) => {
     return res.status(StatusCodes.OK).json({
       status: StatusCodes.OK,
       token: token,
+      role: user.role,
       message: msg.user.userLoginSuccessfully,
     });
   } catch (error) {
