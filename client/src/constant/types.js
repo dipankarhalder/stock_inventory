@@ -10,5 +10,6 @@ export const types = {
   NEXTPAGE: "NEXTPAGE",
   PREVPAGE: "PREVPAGE",
   SETSEARCH: "SETSEARCH",
+  SORT: "SORT",
   RESET: "RESET",
 };

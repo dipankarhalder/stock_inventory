@@ -30,6 +30,7 @@ export const MembersPage = () => {
           data={userData}
           pageSize={10}
           onAction={handleRowAction}
+          sortableFields={["name", "email"]}
         />
       </div>
     </div>
