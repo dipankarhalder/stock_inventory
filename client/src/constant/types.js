@@ -14,3 +14,12 @@ export const types = {
   SORT: "SORT",
   RESET: "RESET",
 };
+
+export const supplierType = {
+  SUPID: "SUPID",
+  NAME: "NAME",
+  COMPANY: "COMPANY",
+  EMAIL: "EMAIL",
+  PHONE: "PHONE",
+  RESET: "RESET",
+};

@@ -6,5 +6,5 @@ export const registerService = `${baseUrl}/auth/signup`;
 export const logoutService = `${baseUrl}/auth/signout`;
 
 // user suppliers
-export const AddSupplierService = `${baseUrl}/supplier/new`;
-export const ListSupplierService = `${baseUrl}/supplier/list`;
+export const addSupplierService = `${baseUrl}/supplier/new`;
+export const listSupplierService = `${baseUrl}/supplier/list`;

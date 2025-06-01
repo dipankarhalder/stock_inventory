@@ -110,7 +110,7 @@ export const navUserlinks = [
       {
         id: 1,
         label: "Categories",
-        path: paths.adminCategories,
+        path: paths.userCategories,
         icon: Categories,
       },
       {

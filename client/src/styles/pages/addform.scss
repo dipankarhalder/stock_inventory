@@ -1,0 +1,25 @@
+.app_add_form {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+
+  .app_new_item_form {
+    margin-top: 30px;
+    width: 600px;
+    background: $white;
+    padding: 30px 36px;
+    border-radius: 8px;
+
+    h2 {
+      font-size: 18px;
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+
+    p {
+      font-size: 15px;
+      font-weight: 500;
+      color: $themegray;
+    }
+  }
+}

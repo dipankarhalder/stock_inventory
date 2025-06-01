@@ -1,13 +1,12 @@
 import { useReducer, useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { paths } from "../../routers/links";
-import { userRole } from "../../constant";
 import { types } from "../../constant/types";
 import { Button } from "../../shared/button/Button";
 import { FormInput } from "../../components/auth/FormInput";
 import { ToastContext } from "../../shared/toast/context/ToastContext";
 import { validateLoginForm } from "../../utils/validationUtils";
-import { toastStatus, btnStatus } from "../../constant";
+import { toastStatus, btnStatus, userRole } from "../../constant";
 import { postServices } from "../../services/core.services";
 import { loginService } from "../../services/endpoints";
 import { handleApiErrorToast } from "../../utils/handleApiErrorToast";
