@@ -10,6 +10,12 @@ const {
   finallyDeleteSupplier,
 } = require('./supplier.controller');
 const { createStatus, getAllStatus, deleteStatus } = require('./status.controller');
+const {
+  createCategory,
+  listCategories,
+  getCategory,
+  deleteCategory,
+} = require('./category.controller');
 
 module.exports = {
   authenticate: {
@@ -37,5 +43,11 @@ module.exports = {
     createStatus,
     getAllStatus,
     deleteStatus,
+  },
+  ucategroies: {
+    createCategory,
+    listCategories,
+    getCategory,
+    deleteCategory,
   },
 };

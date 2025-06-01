@@ -1,4 +1,4 @@
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useRef } from "react";
 import { DataTable } from "../../../shared/table/DataTable";
 import { paths } from "../../../routers/links";
 import { toastStatus } from "../../../constant";
@@ -9,6 +9,7 @@ import { useSupplierStore } from "../../../stores/supplierStore";
 import { handleApiErrorToast } from "../../../utils/handleApiErrorToast";
 
 export const ListSupplier = () => {
+  const hasFetched = useRef(false);
   const { addToast } = useContext(ToastContext);
   const { isLoading, isSupplierData, setLoading, setSupplier } =
     useSupplierStore();
@@ -27,6 +28,9 @@ export const ListSupplier = () => {
   };
 
   useEffect(() => {
+    if (hasFetched.current) return;
+    hasFetched.current = true;
+
     setLoading(true);
     const getSupplier = async () => {
       try {
@@ -44,7 +48,7 @@ export const ListSupplier = () => {
   }, [addToast, setLoading, setSupplier]);
 
   if (isLoading) {
-    <div>Loading...</div>;
+    return <div>Loading...</div>;
   }
 
   const suppliersNewArr =
