@@ -8,3 +8,7 @@ export const logoutService = `${baseUrl}/auth/signout`;
 // user suppliers
 export const addSupplierService = `${baseUrl}/supplier/new`;
 export const listSupplierService = `${baseUrl}/supplier/list`;
+
+// user categories
+export const addCategoryService = `${baseUrl}/category/new`;
+export const listCategoriesService = `${baseUrl}/category/list`;

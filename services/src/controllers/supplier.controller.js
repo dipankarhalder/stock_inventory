@@ -63,33 +63,35 @@ const createSupplier = async (req, res) => {
 const listOfSuppliers = async (req, res) => {
   try {
     /* pagination code */
-    const page = parseInt(req.query.page, 10) || 1;
-    const limit = parseInt(req.query.limit, 10) || 10;
-    const skip = (page - 1) * limit;
+    // const page = parseInt(req.query.page, 10) || 1;
+    // const limit = parseInt(req.query.limit, 10) || 10;
+    // const skip = (page - 1) * limit;
 
     /* filter by status (active, not-active) */
-    const statusFilter = req.query.status;
-    const filter = {};
-    if (statusFilter === 'active' || statusFilter === 'inactive') {
-      filter.status = statusFilter;
-    }
+    // const statusFilter = req.query.status;
+    // const filter = {};
+    // if (statusFilter === 'active' || statusFilter === 'inactive') {
+    //   filter.status = statusFilter;
+    // }
 
-    const [supplierItems, totalItems] = await Promise.all([
-      Supplier.find(filter).skip(skip).limit(limit),
-      Supplier.countDocuments(filter),
-    ]);
-    const totalPages = Math.ceil(totalItems / limit);
+    // const [supplierItems, totalItems] = await Promise.all([
+    //   Supplier.find(filter).skip(skip).limit(limit),
+    //   Supplier.countDocuments(filter),
+    // ]);
+    // const totalPages = Math.ceil(totalItems / limit);
+
+    const supplierItems = await Supplier.find();
 
     /* find all the supplier */
     return res.status(StatusCodes.OK).json({
       status: StatusCodes.OK,
       data: supplierItems,
-      pagination: {
-        totalItems,
-        totalPages,
-        currentPage: page,
-        pageSize: limit,
-      },
+      // pagination: {
+      //   totalItems,
+      //   totalPages,
+      //   currentPage: page,
+      //   pageSize: limit,
+      // },
     });
   } catch (error) {
     return core.sendErrorResponse(res, error);
