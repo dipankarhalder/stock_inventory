@@ -32,6 +32,11 @@ import { SettingsPage } from "../pages/admin/SettingsPage";
 import { UserDashboardPage } from "../pages/users/DashboardPage";
 import { UserMembersPage } from "../pages/users/MembersPage";
 
+// categories
+import { UserCategoriesPage } from "../pages/users/categories/CategoriesPage";
+import { ListUserCategories } from "../pages/users/categories/ListUserCategories";
+import { AddUserCategory } from "../pages/users/categories/AddCategory";
+
 // User taxes
 import { TaxesPage } from "../pages/users/taxes/TaxesPage";
 import { ListTaxes } from "../pages/users/taxes/ListTaxes";
@@ -135,6 +140,22 @@ export const router = createBrowserRouter([
       {
         path: paths.userMembers,
         element: <UserMembersPage />,
+      },
+
+      // categories
+      {
+        path: paths.userCategories,
+        element: <UserCategoriesPage />,
+        children: [
+          {
+            index: true,
+            element: <ListUserCategories />,
+          },
+          {
+            path: paths.userAddSupplier,
+            element: <AddUserCategory />,
+          },
+        ],
       },
 
       // suppliers
