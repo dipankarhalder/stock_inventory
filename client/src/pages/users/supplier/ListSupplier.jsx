@@ -2,7 +2,7 @@ import { useEffect, useContext } from "react";
 import { DataTable } from "../../../shared/table/DataTable";
 import { paths } from "../../../routers/links";
 import { toastStatus } from "../../../constant";
-import { ListSupplierService } from "../../../services/endpoints";
+import { listSupplierService } from "../../../services/endpoints";
 import { ToastContext } from "../../../shared/toast/context/ToastContext";
 import { getServices } from "../../../services/core.services";
 import { useSupplierStore } from "../../../stores/supplierStore";
@@ -30,7 +30,7 @@ export const ListSupplier = () => {
     setLoading(true);
     const getSupplier = async () => {
       try {
-        const res = await getServices(ListSupplierService);
+        const res = await getServices(listSupplierService);
         const isError = await handleApiErrorToast(res, addToast, toastStatus);
         if (isError) return;
 

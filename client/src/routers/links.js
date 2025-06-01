@@ -24,6 +24,10 @@ export const paths = {
   userDashboard: "/users",
   userMembers: "members",
 
+  // categories
+  userCategories: "categories",
+  addCategory: "add-category",
+
   // supplier
   userSuppliers: "suppliers",
   userAddSupplier: "add-supplier",
