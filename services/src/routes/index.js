@@ -3,7 +3,14 @@ const router = express.Router();
 
 const { routes, role } = require('../constant');
 const { auth, taxs, suppliers, statuss } = require('../validation');
-const { authenticate, profile, taxServ, supplier, statuses } = require('../controllers');
+const {
+  authenticate,
+  profile,
+  taxServ,
+  supplier,
+  statuses,
+  ucategroies,
+} = require('../controllers');
 const { authToken, authRole, authValid } = require('../middleware'); // uploadMedia
 
 const { SUPER, ADMIN, STUFF } = role.userRole;
@@ -87,6 +94,21 @@ router.post(
 );
 router.get(routes.paths.listStatus, authToken, authRole([SUPER, ADMIN]), statuses.getAllStatus);
 router.delete(routes.paths.statusItem, authToken, authRole([SUPER, ADMIN]), statuses.deleteStatus);
+
+/* categories */
+router.post(
+  routes.paths.newCategory,
+  authToken,
+  authRole([SUPER, ADMIN]),
+  // authValid(suppliers.supplierInfoSchema),
+  ucategroies.createCategory,
+);
+router.get(
+  routes.paths.listCategory,
+  authToken,
+  authRole([SUPER, ADMIN]),
+  ucategroies.listCategories,
+);
 
 module.exports = {
   rootApiRouter: router,

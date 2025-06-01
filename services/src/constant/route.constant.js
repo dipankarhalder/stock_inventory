@@ -25,6 +25,11 @@ const paths = {
   newSupplier: '/supplier/new',
   listSupplier: '/supplier/list',
   supplierItem: '/supplier/:id',
+
+  /* categories */
+  newCategory: '/category/new',
+  listCategory: '/category/list',
+  categoryItem: '/category/:id',
 };
 
 module.exports = {

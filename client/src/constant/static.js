@@ -105,7 +105,7 @@ export const navUserlinks = [
   },
   {
     id: 2,
-    label: "Shops",
+    label: "Stock",
     children: [
       {
         id: 1,
@@ -113,12 +113,12 @@ export const navUserlinks = [
         path: paths.userCategories,
         icon: Categories,
       },
-      {
-        id: 4,
-        label: "Sub Categories",
-        path: paths.adminCategories,
-        icon: SubCategories,
-      },
+      // {
+      //   id: 4,
+      //   label: "Sub Categories",
+      //   path: paths.adminCategories,
+      //   icon: SubCategories,
+      // },
       {
         id: 2,
         label: "Products",
@@ -127,7 +127,7 @@ export const navUserlinks = [
       },
       {
         id: 3,
-        label: "Stocks",
+        label: "Stocks Return",
         path: paths.adminCustomers,
         icon: Stocks,
       },

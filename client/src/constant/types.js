@@ -23,3 +23,9 @@ export const supplierType = {
   PHONE: "PHONE",
   RESET: "RESET",
 };
+
+export const categoryType = {
+  CATEGORYNAME: "CATEGORYNAME",
+  CATEGORYCODE: "CATEGORYCODE",
+  STATUS: "STATUS",
+};
