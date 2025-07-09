@@ -13,6 +13,15 @@ const userSchema = new mongoose.Schema(
     password: { type: String, minlength: 6, required: true, select: false },
     role: { type: String, required: true, default: roles[1] },
     profileImage: { type: String },
+    refreshTokens: [
+      {
+        token: { type: String },
+        device: { type: String },
+        browser: { type: String },
+        os: { type: String },
+        createdAt: { type: Date, default: Date.now },
+      },
+    ],
   },
   { timestamps: true },
 );
