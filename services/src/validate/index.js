@@ -53,6 +53,12 @@ const admin_signup_validate = Joi.object({
     }),
 });
 
+const admin_signin_validate = Joi.object({
+  email,
+  password,
+});
+
 module.exports = {
   admin_signup_validate,
+  admin_signin_validate,
 };
