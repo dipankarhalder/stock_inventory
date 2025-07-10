@@ -13,6 +13,8 @@ const userSchema = new mongoose.Schema(
     password: { type: String, minlength: 6, required: true, select: false },
     role: { type: String, required: true, default: roles[1] },
     profileImage: { type: String },
+    isApproved: { type: Boolean, default: false },
+    isActive: { type: Boolean, default: true },
     refreshTokens: [
       {
         token: { type: String },

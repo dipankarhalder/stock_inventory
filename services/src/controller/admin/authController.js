@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const UAParser = require('ua-parser-js');
 const { StatusCodes } = require('http-status-codes');
-const User = require('../../models/admin/user_model');
+const User = require('../../models/admin/userModel');
 const { core } = require('../../utils');
 const { env } = require('../../config');
 
@@ -161,92 +161,6 @@ exports.refreshAccessToken = async (req, res) => {
       status: StatusCodes.OK,
       accessToken: newAccessToken,
       message: 'Access token refreshed successfully',
-    });
-  } catch (error) {
-    return core.sendErrorResponse(res, error);
-  }
-};
-
-/* 
-  @service - signout a particular session token,
-  @method - POST,
-*/
-exports.signOutSession = async (req, res) => {
-  try {
-    const { refreshToken } = req.cookies;
-    if (!refreshToken) {
-      return core.validateFields(res, 'Refresh token not provided.');
-    }
-
-    const decoded = jwt.verify(refreshToken, env.JWT_REFRESH);
-    const user = await User.findById(decoded.id).select('+refreshTokens');
-    if (!user) {
-      return core.validateFields(
-        res,
-        'The user associated with this session could not be found. Please sign in again.',
-      );
-    }
-
-    const tokenIndex = user.refreshTokens.findIndex(
-      (session) => session.token === refreshToken,
-    );
-    if (tokenIndex === -1) {
-      return core.validateFields(
-        res,
-        'Session expired or not found or try again later.',
-      );
-    }
-
-    user.refreshTokens.splice(tokenIndex, 1);
-    await user.save();
-    res.clearCookie('refreshToken', {
-      httpOnly: true,
-      secure: env.NODE_ENV === 'production',
-      sameSite: 'Strict',
-    });
-
-    return res.status(StatusCodes.OK).json({
-      status: StatusCodes.OK,
-      message: 'You have been successfully signed out from this session.',
-    });
-  } catch (error) {
-    return core.sendErrorResponse(res, error);
-  }
-};
-
-/* 
-  @service - get all token,
-  @method - GET,
-*/
-exports.getActiveSessions = async (req, res) => {
-  try {
-    const userId = req.user?.id;
-    if (!userId) {
-      return res.status(StatusCodes.UNAUTHORIZED).json({
-        status: StatusCodes.UNAUTHORIZED,
-        message: 'Unauthorized request. User not authenticated.',
-      });
-    }
-
-    const user = await User.findById(userId).select('refreshTokens').lean();
-    if (!user) {
-      return res.status(StatusCodes.NOT_FOUND).json({
-        status: StatusCodes.NOT_FOUND,
-        message: 'User not found in our records.',
-      });
-    }
-
-    const sessions = (user.refreshTokens || []).map((session) => ({
-      device: session.device || 'Unknown',
-      browser: session.browser || 'Unknown',
-      os: session.os || 'Unknown',
-      loginTime: session.createdAt || 'Unknown',
-    }));
-
-    return res.status(StatusCodes.OK).json({
-      status: StatusCodes.OK,
-      count: sessions.length,
-      sessions,
     });
   } catch (error) {
     return core.sendErrorResponse(res, error);
