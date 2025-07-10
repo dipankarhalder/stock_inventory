@@ -8,6 +8,7 @@ router.use('/shop', require('./shopRoute'));
 router.use('/category', require('./categoryRoute'));
 router.use('/sub-category', require('./subcategoryRoute'));
 router.use('/brand', require('./brandRoute'));
+router.use('/attribute', require('./attributeRoute'));
 
 module.exports = {
   root_api_router: router,

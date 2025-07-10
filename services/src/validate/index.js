@@ -100,6 +100,14 @@ const brand_validate = Joi.object({
   ),
 });
 
+const attribute_validate = Joi.object({
+  name: requiredString('Attribute name should not be blank.', ''),
+  code: requiredString(
+    'Attribute code should not be blank.',
+    'Attribute code should not contain leading or trailing spaces.',
+  ),
+});
+
 module.exports = {
   admin_signup_validate,
   admin_signin_validate,
@@ -108,4 +116,5 @@ module.exports = {
   category_validate,
   subcategory_validate,
   brand_validate,
+  attribute_validate,
 };
