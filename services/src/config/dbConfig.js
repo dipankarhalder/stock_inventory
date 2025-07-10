@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { MONGOURI } = require('./env_config');
+const { MONGOURI } = require('./envConfig');
 
 const dbConnect = async () => {
   try {

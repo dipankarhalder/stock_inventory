@@ -1,4 +1,4 @@
 module.exports = {
-  env: require('./env_config'),
-  db: require('./db_config'),
+  env: require('./envConfig'),
+  db: require('./dbConfig'),
 };
