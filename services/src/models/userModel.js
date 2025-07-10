@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 /* mentioned roles */
-const roles = ['super_admin', 'admin', 'staff'];
+const roles = ['super_admin', 'admin', 'staff', 'customer'];
 
 /* user schema */
 const userSchema = new mongoose.Schema(

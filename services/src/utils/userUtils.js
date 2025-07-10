@@ -25,14 +25,28 @@ const isValidObjectId = (id, res, label = 'ID') => {
 
 const canModifyRole = (actorRole, targetRole) => {
   const permissions = {
-    super_admin: ['admin', 'staff'],
+    super_admin: ['admin', 'staff', 'customer'],
     admin: ['staff'],
   };
-  return permissions[actorRole]?.includes(targetRole);
+
+  if (!permissions[actorRole]) return false;
+  return permissions[actorRole].includes(targetRole);
+};
+
+const checkUserRole = (user, requiredRoles, res, customMessage) => {
+  if (!requiredRoles.includes(user.role)) {
+    return res.status(StatusCodes.FORBIDDEN).json({
+      status: StatusCodes.FORBIDDEN,
+      message:
+        customMessage || 'You do not have permission to perform this action.',
+    });
+  }
+  return null;
 };
 
 module.exports = {
   getUserOrRespondNotFound,
   isValidObjectId,
   canModifyRole,
+  checkUserRole,
 };
