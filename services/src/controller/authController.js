@@ -2,9 +2,9 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const UAParser = require('ua-parser-js');
 const { StatusCodes } = require('http-status-codes');
-const User = require('../../models/admin/userModel');
-const { core } = require('../../utils');
-const { env } = require('../../config');
+const User = require('../models/userModel');
+const { core } = require('../utils');
+const { env } = require('../config');
 
 /* 
   @service - User Registration,

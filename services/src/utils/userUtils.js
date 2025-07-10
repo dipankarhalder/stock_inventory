@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const { StatusCodes } = require('http-status-codes');
-const User = require('../models/admin/userModel');
+const User = require('../models/userModel');
 const { notFoundItem } = require('./coreUtils');
 
 const getUserOrRespondNotFound = async (id, res) => {
