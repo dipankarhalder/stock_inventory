@@ -35,8 +35,8 @@ exports.userSignup = async (req, res) => {
     });
 
     await newUser.save();
-    return res.status(StatusCodes.OK).json({
-      status: StatusCodes.OK,
+    return res.status(StatusCodes.CREATED).json({
+      status: StatusCodes.CREATED,
       message: 'New user registered successfully.',
     });
   } catch (error) {
@@ -76,6 +76,7 @@ exports.userSignin = async (req, res) => {
       lastName: user.lastName,
       email: user.email,
       phone: user.phone,
+      role: user.role,
     };
     const accessToken = jwt.sign(payloadToken, env.JWT_ACCESS, {
       expiresIn: env.ACCESS_EXPIRY || '15m',

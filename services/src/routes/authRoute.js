@@ -1,4 +1,5 @@
 const express = require('express');
+const authToken = require('../middleware/authenticate');
 const { validReq } = require('../middleware/validate');
 const { admin_signup_validate, admin_signin_validate } = require('../validate');
 const authenticate = require('../controller/authController');
@@ -15,6 +16,6 @@ router.post(
   authenticate.userSignin,
 );
 router.post('/refresh-token', authenticate.refreshAccessToken);
-router.post('/signout', authenticate.userSignout);
+router.post('/signout', authToken, authenticate.userSignout);
 
 module.exports = router;

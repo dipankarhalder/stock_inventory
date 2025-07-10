@@ -122,7 +122,7 @@ exports.approvalUsers = async (req, res) => {
     await targetUser.save();
     return res.status(StatusCodes.OK).json({
       status: StatusCodes.OK,
-      message: `${targetUser.role} "${targetUser.firstName} ${targetUser.lastName}" has been approved successfully.`,
+      message: `${targetUser.role} '${targetUser.firstName} ${targetUser.lastName}' has been approved successfully.`,
     });
   } catch (error) {
     return core.sendErrorResponse(res, error);
@@ -154,7 +154,7 @@ exports.updateUserActiveStatus = async (req, res) => {
     await targetUser.save();
     return res.status(StatusCodes.OK).json({
       status: StatusCodes.OK,
-      message: `${targetUser.role} "${targetUser.firstName} ${targetUser.lastName}" has been ${isActive ? 'activated' : 'deactivated'} successfully.`,
+      message: `${targetUser.role} '${targetUser.firstName} ${targetUser.lastName}' has been ${isActive ? 'activated' : 'deactivated'} successfully.`,
     });
   } catch (error) {
     return core.sendErrorResponse(res, error);
