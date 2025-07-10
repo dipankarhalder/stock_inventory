@@ -46,7 +46,7 @@ const admin_signup_validate = Joi.object({
   password,
   phone,
   role: Joi.string()
-    .valid('super_admin', 'admin', 'staff')
+    .valid('super_admin', 'admin', 'staff', 'customer')
     .required()
     .messages({
       'any.only': 'Please select a valid user role.',
@@ -58,7 +58,17 @@ const admin_signin_validate = Joi.object({
   password,
 });
 
+const warehouse_validate = Joi.object({
+  name: requiredString('Warehouse Name should not be blank.', ''),
+  code: requiredString(
+    'Warehouse code should not be blank.',
+    'Warehouse code should not contain leading or trailing spaces.',
+  ),
+  address: requiredString('Warehouse address should not be blank.', ''),
+});
+
 module.exports = {
   admin_signup_validate,
   admin_signin_validate,
+  warehouse_validate,
 };
