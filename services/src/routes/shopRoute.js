@@ -2,24 +2,24 @@ const express = require('express');
 const authToken = require('../middleware/authenticate');
 const roles = require('../middleware/role');
 const { validReq } = require('../middleware/validate');
-const { warehouse_validate } = require('../validate');
-const warehouse = require('../controller/warehouseController');
+const { shop_validate } = require('../validate');
+const shops = require('../controller/shopController');
 
 const router = express.Router();
 router.post(
   '/new',
-  validReq(warehouse_validate),
+  validReq(shop_validate),
   authToken,
   roles('customer'),
-  warehouse.createWarehouse,
+  shops.createShop,
 );
-router.get('/list', authToken, roles('customer'), warehouse.getWarehouses);
-router.get('/:id', authToken, roles('customer'), warehouse.getWarehouse);
+router.get('/list', authToken, roles('customer'), shops.getShops);
+router.get('/:id', authToken, roles('customer'), shops.getShop);
 router.post(
   '/update-status',
   authToken,
   roles('customer'),
-  warehouse.updateWarehouseActiveStatus,
+  shops.updateShopActiveStatus,
 );
 
 module.exports = router;
