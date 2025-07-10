@@ -1,3 +1,4 @@
 module.exports = {
-  core: require('./core_utils'),
+  core: require('./coreUtils'),
+  userUtils: require('./userUtils'),
 };
