@@ -1,8 +1,14 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
@@ -54,37 +60,61 @@ export const SigninForm = () => {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input placeholder="you@example.com" {...field} className="h-12 px-5" />
+                  <Input
+                    placeholder="you@example.com"
+                    {...field}
+                    className="h-12 px-5 font-medium"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
         </div>
-        <div className="mb-8">
+        <div className="mb-4">
           <FormField
             control={form.control}
             name="password"
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input type="password" placeholder="********" {...field} className="h-12 px-5" />
+                  <Input
+                    type="password"
+                    placeholder="********"
+                    {...field}
+                    className="h-12 px-5 font-medium"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
         </div>
-        {loading ? (
-          <div className="w-full bg-gray-400 h-11 flex items-center justify-center rounded-md">
-            <Spinner />
-            <p className="font-medium text-white text-sm ml-2">Please wait...</p>
-          </div>
-        ) : (
-          <Button className="w-full bg-indigo-600 text-sm h-11 hover:bg-indigo-700" type="submit">
-            Login
-          </Button>
-        )}
+        <div className="flex w-full mb-5 justify-end">
+          <Link
+            to={"/"}
+            className="text-sm font-medium underline text-blue-800 hover:text-[#1A2C95]"
+          >
+            Forgot password?
+          </Link>
+        </div>
+        <div className="flex justify-center w-full">
+          {loading ? (
+            <div className="w-full bg-gray-400 h-11 flex items-center justify-center rounded-md">
+              <Spinner />
+              <p className="font-medium text-white text-sm ml-2">
+                Please wait...
+              </p>
+            </div>
+          ) : (
+            <Button
+              className="w-auto bg-blue-700 text-sm h-10 hover:bg-[#1A2C95] px-9"
+              type="submit"
+            >
+              Login
+            </Button>
+          )}
+        </div>
       </form>
     </Form>
   );

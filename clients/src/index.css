@@ -2,6 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: Basel;
+  src: url("/fonts/BG-TF-Bold-Web.woff2") format("woff2");
+  font-weight: 700;
+}
+@font-face {
+  font-family: Basel;
+  src: url("/fonts/BG-TF-Medium-Web.woff2") format("woff2");
+  font-weight: 500;
+}
+@font-face {
+  font-family: Basel;
+  src: url("/fonts/BG-TF-Regular-Web.woff2") format("woff2");
+  font-weight: 400;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -83,9 +99,13 @@
 }
 
 body {
-  font-family: "Inter", serif;
+  font-family: "Basel", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "ss01" /*dots*/, "ss02" /*a*/, "ss07" /*G*/,
+    "ss08" /*J*/, "ss09" /*Q*/;
 }
 button,
 input,
@@ -93,7 +113,7 @@ optgroup,
 select,
 textarea,
 table {
-  font-family: "Inter", serif;
+  font-family: "Basel", sans-serif;
 }
 
 .appSidebar li a {
