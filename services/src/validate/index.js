@@ -67,8 +67,18 @@ const warehouse_validate = Joi.object({
   address: requiredString('Warehouse address should not be blank.', ''),
 });
 
+const shop_validate = Joi.object({
+  name: requiredString('Shop Name should not be blank.', ''),
+  code: requiredString(
+    'Shop code should not be blank.',
+    'Shop code should not contain leading or trailing spaces.',
+  ),
+  address: requiredString('Shop address should not be blank.', ''),
+});
+
 module.exports = {
   admin_signup_validate,
   admin_signin_validate,
   warehouse_validate,
+  shop_validate,
 };
