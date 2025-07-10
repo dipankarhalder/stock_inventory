@@ -62,7 +62,11 @@ export const SignupForm = () => {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input placeholder="Name" {...field} className="h-12 px-5" />
+                  <Input
+                    placeholder="Name"
+                    {...field}
+                    className="h-12 px-5 font-medium"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -79,7 +83,7 @@ export const SignupForm = () => {
                   <Input
                     placeholder="example@example.com"
                     {...field}
-                    className="h-12 px-5"
+                    className="h-12 px-5 font-medium"
                   />
                 </FormControl>
                 <FormMessage />
@@ -97,7 +101,7 @@ export const SignupForm = () => {
                   <Input
                     placeholder="Phone no."
                     {...field}
-                    className="h-12 px-5"
+                    className="h-12 px-5 font-medium"
                   />
                 </FormControl>
                 <FormMessage />
@@ -116,7 +120,7 @@ export const SignupForm = () => {
                     type="password"
                     placeholder="********"
                     {...field}
-                    className="h-12 px-5"
+                    className="h-12 px-5 font-medium"
                   />
                 </FormControl>
                 <FormMessage />
@@ -124,21 +128,23 @@ export const SignupForm = () => {
             )}
           />
         </div>
-        {loading ? (
-          <div className="w-full bg-gray-400 h-11 flex items-center justify-center rounded-md">
-            <Spinner />
-            <p className="font-medium text-white text-sm ml-2">
-              Please wait...
-            </p>
-          </div>
-        ) : (
-          <Button
-            className="w-full h-11 text-sm bg-indigo-600 hover:bg-indigo-700"
-            type="submit"
-          >
-            Create an account
-          </Button>
-        )}
+        <div className="flex justify-center w-full">
+          {loading ? (
+            <div className="w-full bg-gray-400 h-11 flex items-center justify-center rounded-md">
+              <Spinner />
+              <p className="font-medium text-white text-sm ml-2">
+                Please wait...
+              </p>
+            </div>
+          ) : (
+            <Button
+              className="w-auto bg-blue-700 text-sm h-10 hover:bg-[#1A2C95] px-9"
+              type="submit"
+            >
+              Create an account
+            </Button>
+          )}
+        </div>
       </form>
     </Form>
   );
