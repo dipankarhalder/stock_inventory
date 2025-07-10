@@ -1,7 +1,7 @@
 const path = require('path');
 const { StatusCodes } = require('http-status-codes');
-const User = require('../../models/admin/userModel');
-const { core, userUtils } = require('../../utils');
+const User = require('../models/userModel');
+const { core, userUtils } = require('../utils');
 
 /* 
   @service - Logged-in user details,

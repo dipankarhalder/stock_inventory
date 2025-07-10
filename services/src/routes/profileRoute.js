@@ -1,8 +1,8 @@
 const express = require('express');
-const authToken = require('../../middleware/authenticate');
-const uploadMedia = require('../../middleware/upload');
-const roles = require('../../middleware/role');
-const profile = require('../../controller/admin/profileController');
+const authToken = require('../middleware/authenticate');
+const uploadMedia = require('../middleware/upload');
+const roles = require('../middleware/role');
+const profile = require('../controller/profileController');
 
 const router = express.Router();
 router.get('/me', authToken, profile.userProfile);
