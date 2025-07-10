@@ -59,7 +59,7 @@ const admin_signin_validate = Joi.object({
 });
 
 const warehouse_validate = Joi.object({
-  name: requiredString('Warehouse Name should not be blank.', ''),
+  name: requiredString('Warehouse name should not be blank.', ''),
   code: requiredString(
     'Warehouse code should not be blank.',
     'Warehouse code should not contain leading or trailing spaces.',
@@ -68,7 +68,7 @@ const warehouse_validate = Joi.object({
 });
 
 const shop_validate = Joi.object({
-  name: requiredString('Shop Name should not be blank.', ''),
+  name: requiredString('Shop name should not be blank.', ''),
   code: requiredString(
     'Shop code should not be blank.',
     'Shop code should not contain leading or trailing spaces.',
@@ -76,9 +76,36 @@ const shop_validate = Joi.object({
   address: requiredString('Shop address should not be blank.', ''),
 });
 
+const category_validate = Joi.object({
+  name: requiredString('Category name should not be blank.', ''),
+  code: requiredString(
+    'Category code should not be blank.',
+    'Category code should not contain leading or trailing spaces.',
+  ),
+});
+
+const subcategory_validate = Joi.object({
+  name: requiredString('Sub category name should not be blank.', ''),
+  code: requiredString(
+    'Sub category code should not be blank.',
+    'Sub category code should not contain leading or trailing spaces.',
+  ),
+});
+
+const brand_validate = Joi.object({
+  name: requiredString('Brand name should not be blank.', ''),
+  code: requiredString(
+    'Brand code should not be blank.',
+    'Brand code should not contain leading or trailing spaces.',
+  ),
+});
+
 module.exports = {
   admin_signup_validate,
   admin_signin_validate,
   warehouse_validate,
   shop_validate,
+  category_validate,
+  subcategory_validate,
+  brand_validate,
 };
